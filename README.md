@@ -22,14 +22,15 @@
 
 ## Screenshot Of Project Overview
 
-- ![Image](./images/Screenshot%202025-07-17%20at%208.23.13 PM.png)
+- https://ayreenjohnson100.github.io/se_project_spots/
+
   Here the image of the project that I have completed. I'll go over a element that help me accomplish this project might of gave others a hard time.
 
-Plus New Post: [Image](./images/Screenshot%202025-07-17%20at%208.29.29 PM.png): Clicking on the image you would see the button. For me to be able to separate the plus from new post I had to add a class within the img tag in html which is (profile add-plus) and CSS I added the margin-right 8 px to add space between the two. With out adding that class it would margin the entire whole button. Something you must watch out for.
+Plus New Post: [Image](./images/SS%20Plus-btn%20img.png): Clicking on the image you would see the button. For me to be able to separate the plus from new post I had to add a class within the img tag in html which is (profile add-plus) and CSS I added the margin-right 8 px to add space between the two. With out adding that class it would margin the entire whole button. Something you must watch out for.
 
 ## Link To Project
 
--
+- https://ayreenjohnson100.github.io/se_project_spots/
 
 ### Overview
 
