@@ -17,23 +17,44 @@
   border: 2px;
   opacity: 40%;
   background-color: transparent;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.card__like-btn:hover {
+  background-color: #c6d2c6;
+  cursor: pointer;
+  border-color: aliceblue;
 }
 
 .card__content {
+  margin-top: 12px;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
 .card__title {
-  font-family: "Poppins";
+  font-family: "Poppins", Arial, sans-serif;
   font-size: 20px;
-  height: 24px;
-  font-weight: 400;
+  font-weight: 500;
+  margin-bottom: 0;
+  line-height: normal;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: none;
+  margin-top: auto;
 }
 
 @media screen and (max-width: 627px) {
   .card__image {
     height: 288px;
+  }
+
+  .card__title {
+    max-width: 250px;
+    font-size: 16px;
   }
 }

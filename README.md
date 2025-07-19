@@ -28,6 +28,10 @@
 
 Plus New Post: [Image](./images/SS%20Plus-btn%20img.png): Clicking on the image you would see the button. For me to be able to separate the plus from new post I had to add a class within the img tag in html which is (profile add-plus) and CSS I added the margin-right 8 px to add space between the two. With out adding that class it would margin the entire whole button. Something you must watch out for.
 
+# Screen Recording Of Project
+
+- https://drive.google.com/file/d/1CXKJVFURbDMd8agZRMtF3lgTxLwlh6ft/view?usp=sharing
+
 ## Link To Project
 
 - https://ayreenjohnson100.github.io/se_project_spots/

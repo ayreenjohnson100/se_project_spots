@@ -1,9 +1,7 @@
 .profile {
   display: flex;
-  align-items: center;
   position: relative;
-  padding: 5px;
-  border-radius: 8px;
+  padding: 40px 0 32px;
   border-bottom: 1px rgba(33, 33, 33, 0.4) solid;
 }
 
@@ -12,6 +10,7 @@
   width: 190px;
   margin-right: 20px;
   border-radius: 8px;
+  object-fit: cover;
 }
 
 .profile__column {
@@ -31,6 +30,8 @@
   -webkit-box-orient: vertical;
   max-width: 420px;
   text-align: left;
+  line-height: 100%;
+  font-size: 32px;
 }
 
 .profile__description {
@@ -41,17 +42,29 @@
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   max-width: 420px;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 100%;
 }
 
 .profile__edit-btn {
-  margin-top: 8px;
+  padding: 0;
+  display: flex;
+  margin-top: auto;
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 14px;
-  color: #6b6b6b;
+  font-size: 16px;
+  color: #212121;
   align-self: flex-start;
   margin-right: 8px;
+}
+
+.profile__edit-btn:hover {
+  color: #333333;
+  background-color: #f2f2f2;
+  transform: scale(1.05);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .profile__pencil {
@@ -62,6 +75,7 @@
   margin-left: auto;
   width: 137px;
   padding: 0;
+  /* I used this value to help position the the new post button. The button with all of the effects is below. Should I delete this and add all of the values below to the other profile add btn */
 }
 
 @media screen and (max-width: 627px) {
@@ -70,51 +84,51 @@
     align-items: center;
     padding-top: 20px;
   }
-}
 
-.profile__avatar {
-  margin-right: 0;
-  height: 190px;
-  width: 190px;
-  margin-bottom: 12px;
-}
+  .profile__avatar {
+    margin-right: 0;
+    height: 190px;
+    width: 190px;
+    margin-bottom: 12px;
+  }
 
-.profile__name {
-  margin-bottom: 6px;
-  font-size: 20px;
-  max-width: 288px;
-}
+  .profile__name {
+    margin-bottom: 6px;
+    font-size: 20px;
+    max-width: 288px;
+  }
 
-.profile__description {
-  margin-bottom: 32px;
-  font-size: 16px;
-}
+  .profile__description {
+    margin-bottom: 32px;
+    font-size: 16px;
+  }
 
-.profile__column {
-  text-align: center;
-  margin-right: 0;
-}
+  .profile__column {
+    text-align: center;
+    margin-right: 0;
+  }
 
-.profile__add-btn {
-  align-self: center;
-  display: inline-block;
-  background-color: #000000;
-  color: #fff;
-  font-size: 16px;
-  font-weight: bold;
-  padding: 12px 24px;
-  border-radius: 4px;
-  text-decoration: none;
-  transition: background-color 0.3s ease;
-  max-width: 288px;
-  width: auto;
-  margin-top: 140px;
-}
+  .profile__add-btn {
+    align-self: center;
+    display: inline-block;
+    background-color: #000000;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 12px 24px;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    max-width: 288px;
+    width: auto;
+    margin-top: 140px;
+  }
 
-.profile__add-btn:hover {
-  background-color: #424344;
-}
+  .profile__add-btn:hover {
+    background-color: #424344;
+  }
 
-.profile__add-plus {
-  margin-right: 8px;
+  .profile__add-plus {
+    margin-right: 8px;
+  }
 }
