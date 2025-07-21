@@ -30,7 +30,7 @@ Plus New Post: [Image](./images/SS%20Plus-btn%20img.png): Clicking on the image 
 
 # Screen Recording Of Project
 
-- https://drive.google.com/file/d/1CXKJVFURbDMd8agZRMtF3lgTxLwlh6ft/view?usp=sharing
+- https://drive.google.com/file/d/1CXKJVFURbDMd8agZRMtF3lgTxLwlh6ft/view?usp=drive_link
 
 ## Link To Project
 

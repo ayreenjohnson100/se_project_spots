@@ -58,6 +58,7 @@
   color: #212121;
   align-self: flex-start;
   margin-right: 8px;
+  font-weight: 500;
 }
 
 .profile__edit-btn:hover {
@@ -65,6 +66,8 @@
   background-color: #f2f2f2;
   transform: scale(1.05);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  opacity: 1;
+  cursor: pointer;
 }
 
 .profile__pencil {
@@ -75,20 +78,40 @@
   margin-left: auto;
   width: 137px;
   padding: 0;
-  /* I used this value to help position the the new post button. The button with all of the effects is below. Should I delete this and add all of the values below to the other profile add btn */
+  align-self: center;
+  display: inline-block;
+  background-color: #000000;
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 12px 24px;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+  max-width: 288px;
+  width: auto;
+  margin-top: 140px;
+}
+
+.profile__add-btn:hover {
+  background-color: #424344;
+  opacity: 1;
+  cursor: pointer;
 }
 
 @media screen and (max-width: 627px) {
   .profile {
     flex-direction: column;
     align-items: center;
+    height: 190px;
+    width: 190px;
     padding-top: 20px;
   }
 
   .profile__avatar {
     margin-right: 0;
-    height: 190px;
-    width: 190px;
+    height: 104.35px;
+    width: 80px;
     margin-bottom: 12px;
   }
 
@@ -101,6 +124,7 @@
   .profile__description {
     margin-bottom: 32px;
     font-size: 16px;
+    opacity: 1;
   }
 
   .profile__column {
@@ -122,10 +146,6 @@
     max-width: 288px;
     width: auto;
     margin-top: 140px;
-  }
-
-  .profile__add-btn:hover {
-    background-color: #424344;
   }
 
   .profile__add-plus {

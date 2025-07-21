@@ -23,9 +23,8 @@
 }
 
 .card__like-btn:hover {
-  background-color: #c6d2c6;
+  opacity: 1;
   cursor: pointer;
-  border-color: aliceblue;
 }
 
 .card__content {
@@ -45,7 +44,7 @@
   white-space: nowrap;
   overflow: hidden;
   max-width: none;
-  margin-top: auto;
+  margin-top: 0;
 }
 
 @media screen and (max-width: 627px) {

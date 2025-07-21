@@ -7,4 +7,10 @@
 
 .footer__copyright {
   margin: 0;
+  font: "Poppins";
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 100%;
+  opacity: 1;
+  color: #212121;
 }
