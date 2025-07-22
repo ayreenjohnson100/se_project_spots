@@ -1,14 +1,13 @@
 .profile {
   display: flex;
   position: relative;
-  padding: 40px 0 32px;
+  padding: 34px 0 32px;
   border-bottom: 1px rgba(33, 33, 33, 0.4) solid;
 }
 
 .profile__avatar {
   height: 190px;
   width: 190px;
-  margin-right: 20px;
   border-radius: 8px;
   object-fit: cover;
 }
@@ -45,6 +44,7 @@
   font-weight: 500;
   font-size: 16px;
   line-height: 100%;
+  opacity: 70%;
 }
 
 .profile__edit-btn {
@@ -76,25 +76,23 @@
 
 .profile__add-btn {
   margin-left: auto;
-  width: 137px;
+  height: 52px;
   padding: 0;
   align-self: center;
   display: inline-block;
-  background-color: #000000;
-  color: #fff;
+  background-color: #212121;
+  color: #fcf5e5;
   font-size: 16px;
   font-weight: bold;
   padding: 12px 24px;
-  border-radius: 4px;
+  border-radius: 8px;
   text-decoration: none;
   transition: background-color 0.3s ease;
-  max-width: 288px;
-  width: auto;
-  margin-top: 140px;
+  width: 149px;
+  margin-top: auto;
 }
 
 .profile__add-btn:hover {
-  background-color: #424344;
   opacity: 1;
   cursor: pointer;
 }
@@ -103,14 +101,12 @@
   .profile {
     flex-direction: column;
     align-items: center;
-    height: 190px;
-    width: 190px;
     padding-top: 20px;
   }
 
   .profile__avatar {
     margin-right: 0;
-    height: 104.35px;
+    height: 80px;
     width: 80px;
     margin-bottom: 12px;
   }
@@ -124,31 +120,24 @@
   .profile__description {
     margin-bottom: 32px;
     font-size: 16px;
-    opacity: 1;
   }
 
   .profile__column {
     text-align: center;
     margin-right: 0;
+    align-items: center;
+    margin-bottom: 20px;
   }
 
   .profile__add-btn {
-    align-self: center;
-    display: inline-block;
-    background-color: #000000;
-    color: #fff;
-    font-size: 16px;
-    font-weight: bold;
-    padding: 12px 24px;
-    border-radius: 4px;
-    text-decoration: none;
-    transition: background-color 0.3s ease;
-    max-width: 288px;
-    width: auto;
-    margin-top: 140px;
+    width: 100%;
   }
 
   .profile__add-plus {
     margin-right: 8px;
+  }
+
+  .profile__edit-btn {
+    align-self: center;
   }
 }

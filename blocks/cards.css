@@ -18,5 +18,10 @@
   .cards__list {
     grid-template-columns: repeat(auto-fit, 288px);
     padding-bottom: 40px;
+    gap: 20px;
+  }
+
+  .cards {
+    padding-bottom: 20px;
   }
 }
