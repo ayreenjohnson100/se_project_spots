@@ -1,7 +1,7 @@
-/* Add Correct Font Styles */
-
 .modal {
   visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s, opacity 0.3s linear;
   background-color: #00000080;
   position: fixed;
   top: 0;
@@ -16,6 +16,7 @@
 
 .modal_is-opened {
   visibility: visible;
+  opacity: 1;
 }
 
 .modal__container {
@@ -58,7 +59,7 @@
 }
 
 .modal__input {
-  isplay: block;
+  display: block;
   margin: 8px 0 0;
   border-radius: 8px;
   width: 100%;
@@ -67,7 +68,6 @@
   box-sizing: border-box;
   margin-bottom: 2px;
   border: 1px solid #21212166;
-  /* Boarding padding */
 }
 
 .modal__input::placeholder {
@@ -84,7 +84,6 @@
   line-height: 100%;
   color: #fcf5e5;
   background-color: #212121;
-  /* TODO - remove max witdh in media */
 }
 
 @media screen and (max-width: 767px) {
