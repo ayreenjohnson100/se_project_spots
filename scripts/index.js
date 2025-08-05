@@ -24,8 +24,8 @@ editProfileBtn.addEventListener("click", function () {
   editProfileModal.classList.add("modal_is-opened");
 });
 
-editProfileCloseBtn.addEventListener("click", function () {
-  editProfileModal.classList.remove("modal_is-opened");
+editProfileCloseBtn.addEventListener("click", () => {
+  closeModal(editProfileModal);
 });
 
 newPostBtn.addEventListener("click", function () {
@@ -45,9 +45,10 @@ function handleEditProfileSubmit(evt) {
 
 editProfileForm.addEventListener("submit", handleEditProfileSubmit);
 
-function handleNewPostProfileSubmit() {
+function handleNewPostProfileSubmit(evt) {
   evt.preventDefault();
-  console.log("submitting");
+  console.log("Image URL:", newPostImageInput.value);
+  console.log("Caption:", newPostCaptionInput.value);
 }
 
 newPostProfileForm.addEventListener("submit", handleNewPostProfileSubmit);
