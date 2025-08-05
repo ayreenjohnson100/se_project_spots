@@ -22,26 +22,14 @@ const newPostCaptionInput = newPostModal.querySelector(
   "#profile-description-input-caption"
 );
 
-openModal(editProfileModal);
-
 editProfileBtn.addEventListener("click", function () {
   editProfileNameInput.value = profileNameEl.textContent;
   editProfileDescriptionInput.value = profileDescriptionEl.textContent;
+  openModal(editProfileModal);
 });
 
 editProfileCloseBtn.addEventListener("click", () => {
   closeModal(editProfileModal);
-  function openModal(modal) {
-    modal.classList.add("modal_is-opened");
-  }
-
-  function closeModal(modal) {
-    modal.classList.remove("modal_is-opened");
-  }
-});
-
-newPostBtn.addEventListener("click", function () {
-  openModal(newPostModal);
 });
 
 newPostClosebtn.addEventListener("click", function () {
