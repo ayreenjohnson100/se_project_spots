@@ -36,6 +36,10 @@ newPostClosebtn.addEventListener("click", function () {
   closeModal(newPostModal);
 });
 
+newPostBtn.addEventListener("click", function () {
+  openModal(newPostModal);
+});
+
 function handleEditProfileSubmit(evt) {
   evt.preventDefault();
   profileNameEl.textContent = editProfileNameInput.value;
@@ -53,3 +57,11 @@ function handleNewPostProfileSubmit(evt) {
 }
 
 newPostProfileForm.addEventListener("submit", handleNewPostProfileSubmit);
+
+function openModal(modal) {
+  modal.classList.add("modal_is-opened");
+}
+
+function closeModal(modal) {
+  modal.classList.remove("modal_is-opened");
+}
