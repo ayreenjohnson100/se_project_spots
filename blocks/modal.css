@@ -38,6 +38,7 @@
   font-size: 22px;
   border: none;
   background-color: transparent;
+  cursor: pointer;
 }
 
 .modal__close-btn_type_preview {
@@ -93,6 +94,7 @@
   line-height: 100%;
   color: #fcf5e5;
   background-color: #212121;
+  cursor: pointer;
 }
 
 .modal__image-container {

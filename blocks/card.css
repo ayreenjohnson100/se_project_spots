@@ -9,6 +9,7 @@
   object-fit: cover;
   display: block;
   border-radius: 8px;
+  cursor: pointer;
 }
 
 .card__delete-button {
@@ -33,7 +34,6 @@
   background-image: url(../images/heart.svg);
   width: 23px;
   height: 20px;
-  border: 2px;
   opacity: 40%;
   background-color: transparent;
   cursor: pointer;
