@@ -42,16 +42,13 @@
 }
 
 .modal__close-btn_type_preview {
-  /* set up correct background image*/
   top: 0;
   right: -52.5px;
 }
 
-/* set correct hover state buttons for preview and closing*/
-
 .modal__title {
   margin: 0 0 32px;
-  font: "Poppins";
+  font-family: "Poppins";
   font-size: 32px;
   line-height: 100%;
   color: #212121;
@@ -64,7 +61,7 @@
 
 .modal__label {
   margin: 0 0 32px;
-  font: "Poppins";
+  font-family: "Poppins";
 }
 
 .modal__input {
@@ -148,5 +145,6 @@
     border-color 0.3s ease;
 }
 
-.modal__x:hover {
+.modal__close-btn:hover .modal__x {
+  transform: scale(1.1);
 }

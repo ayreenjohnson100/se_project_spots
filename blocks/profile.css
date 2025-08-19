@@ -74,7 +74,6 @@
 .profile__add-btn {
   margin-left: auto;
   height: 52px;
-  padding: 0;
   align-self: center;
   display: inline-block;
   background-color: #212121;
@@ -88,6 +87,7 @@
   transition: background-color 0.3s ease;
   width: 149px;
   margin-top: auto;
+  cursor: pointer;
 }
 
 .profile__add-btn:hover {

@@ -7,10 +7,16 @@
 
 .footer__copyright {
   margin: 0;
-  font: "Poppins";
+  font-family: "Poppins";
   font-size: 16px;
   font-weight: 400;
   line-height: 100%;
   opacity: 70%;
   color: #212121;
+}
+
+@media screen and (min-width: 627px) {
+  footer {
+    padding: 60px 20px;
+  }
 }
