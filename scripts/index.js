@@ -165,3 +165,18 @@ modalClose.addEventListener("click", () => closeModal(previewModal));
 initialCards.forEach((item) => {
   cardsList.append(getCardElement(item));
 });
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" || e.key === "Esc") {
+    const opened = document.querySelector(".modal.modal_is-opened");
+    if (opened) closeModal(opened);
+  }
+});
+
+document.querySelectorAll(".modal").forEach((modal) => {
+  modal.addEventListener("mousedown", (e) => {
+    if (e.target === modal) {
+      closeModal(modal);
+    }
+  });
+});
