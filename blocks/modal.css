@@ -81,6 +81,10 @@
   color: #2121214d;
 }
 
+.modal__input_type_error {
+  border: 1px solid #ff000099;
+}
+
 .modal__submit-btn {
   max-width: 156px;
   padding: 18px 32px;
@@ -92,6 +96,12 @@
   color: #fcf5e5;
   background-color: #212121;
   cursor: pointer;
+}
+
+.modal__submit-btn_disabled {
+  cursor: not-allowed;
+  background-color: #212121;
+  opacity: 0.5;
 }
 
 .modal__image-container {
@@ -147,4 +157,12 @@
 
 .modal__close-btn:hover .modal__x {
   transform: scale(1.1);
+}
+
+.modal__error {
+  display: block;
+  margin-top: 8px;
+  color: #ff0000b2;
+  font-family: "Poppins";
+  font-size: 16px;
 }

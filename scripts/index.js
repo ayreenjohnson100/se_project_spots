@@ -116,6 +116,9 @@ function handleEditProfileSubmit(evt) {
   closeModal(editProfileModal);
 }
 
+validator.clearErrorUI(editProfileForm);
+validator.toggleButtonState(editProfileForm);
+
 /*New Post*/
 function handleNewPostProfileSubmit(evt) {
   evt.preventDefault();
@@ -128,12 +131,18 @@ function handleNewPostProfileSubmit(evt) {
   cardsList.prepend(getCardElement(cardData));
   closeModal(newPostModal);
   newPostProfileForm.reset();
+
+  validator.resetFormUI(newPostProfileForm);
 }
 
 /*Profile modal*/
 editProfileBtn.addEventListener("click", () => {
   editProfileNameInput.value = profileNameEl.textContent;
   editProfileDescriptionInput.value = profileDescriptionEl.textContent;
+
+  validator.clearErrorUI(editProfileForm);
+  validator.toggleButtonState(editProfileForm);
+
   openModal(editProfileModal);
 });
 editProfileCloseBtn.addEventListener("click", () =>
@@ -143,7 +152,11 @@ editProfileForm.addEventListener("submit", handleEditProfileSubmit);
 
 /*New Post modal*/
 newPostBtn.addEventListener("click", () => openModal(newPostModal));
+validator.resetFormUI(newPostProfileForm);
+openModal(newPostModal);
 newPostCloseBtn.addEventListener("click", () => closeModal(newPostModal));
+validator.resetFormUI(newPostProfileForm);
+closeModal(newPostModal);
 newPostProfileForm.addEventListener("submit", handleNewPostProfileSubmit);
 
 /*Preview modal*/
