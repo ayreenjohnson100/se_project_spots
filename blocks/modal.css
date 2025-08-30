@@ -90,7 +90,7 @@
   padding: 18px 32px;
   border: none;
   border-radius: 8px;
-  font: "Poppins";
+  font-family: "Poppins", Arial, sans-serif;
   font-size: 16px;
   line-height: 100%;
   color: #fcf5e5;
@@ -148,7 +148,7 @@
 }
 
 .modal__x {
-  border: 2px;
+  border: 2px solid #ffffff;
   color: #ffffff;
   right: 10px;
   transition: background-color 0.3s ease, color 0.3s ease,

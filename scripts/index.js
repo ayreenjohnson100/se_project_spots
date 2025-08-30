@@ -151,12 +151,14 @@ editProfileCloseBtn.addEventListener("click", () =>
 editProfileForm.addEventListener("submit", handleEditProfileSubmit);
 
 /*New Post modal*/
-newPostBtn.addEventListener("click", () => openModal(newPostModal));
-validator.resetFormUI(newPostProfileForm);
-openModal(newPostModal);
-newPostCloseBtn.addEventListener("click", () => closeModal(newPostModal));
-validator.resetFormUI(newPostProfileForm);
-closeModal(newPostModal);
+newPostBtn.addEventListener("click", () => {
+  validator.resetFormUI(newPostProfileForm);
+  openModal(newPostModal);
+});
+newPostCloseBtn.addEventListener("click", () => {
+  validator.resetFormUI(newPostProfileForm);
+  closeModal(newPostModal);
+});
 newPostProfileForm.addEventListener("submit", handleNewPostProfileSubmit);
 
 /*Preview modal*/
@@ -166,17 +168,19 @@ initialCards.forEach((item) => {
   cardsList.append(getCardElement(item));
 });
 
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape" || e.key === "Esc") {
+function handleEscClose(evt) {
+  if (evt.key === "Escape" || evt.key === "Esc") {
     const opened = document.querySelector(".modal.modal_is-opened");
     if (opened) closeModal(opened);
   }
-});
+}
 
-document.querySelectorAll(".modal").forEach((modal) => {
-  modal.addEventListener("mousedown", (e) => {
-    if (e.target === modal) {
-      closeModal(modal);
-    }
-  });
-});
+function openModal(modal) {
+  modal.classList.add("modal_is-opened");
+  document.addEventListener("keydown", handleEscClose);
+}
+
+function closeModal(modal) {
+  modal.classList.remove("modal_is-opened");
+  document.removeEventListener("keydown", handleEscClose);
+}
