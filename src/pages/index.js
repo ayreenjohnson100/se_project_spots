@@ -1,149 +1,225 @@
+// ===== IMPORT STYLES =====
 import "./index.css";
 import "../vendor/fonts.css";
+
+// ===== IMPORT HELPERS / MODULES =====
 import { validator } from "../scripts/validation.js";
 import { openModal, closeModal } from "../scripts/modal.js";
 
+// ===== IMPORT API CLASS =====
+import Api from "../utils/Api.js";
+
+// ===== IMPORT IMAGES (Webpack gives us URLs) =====
 import logoUrl from "../images/Logo.svg";
-import pencilUrl from "../images/pencil.svg";
-import plusUrl from "../images/plus.svg";
-import avatarUrl from "../images/avatar.jpg";
+import avatarFallbackUrl from "../images/AvatarProject9.png";
+// NOTE: pencil.svg and plus.svg are already set via <%= require(...) %> in HTML
+// so we don't have to import them here unless we want to overwrite them later.
 
-document.querySelector(".profile__avatar").src = avatarUrl;
-document.querySelector(".header__logo").src = logoUrl;
-document.querySelector(".profile__pencil").src = pencilUrl;
-document.querySelector(".profile__add-plus").src = plusUrl;
+// ===== DOM LOOKUPS =====
 
-const initialCards = [
-  {
-    name: "Golden Gate Bridge",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/7-photo-by-griffin-wooldridge-from-pexels.jpg",
-  },
-  {
-    name: "Val Thorens",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/1-photo-by-moritz-feldmann-from-pexels.jpg",
-  },
-  {
-    name: "Restaurant terrace",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/2-photo-by-ceiline-from-pexels.jpg",
-  },
-  {
-    name: "An outdoor cafe",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/3-photo-by-tubanur-dogan-from-pexels.jpg",
-  },
-  {
-    name: "A very long bridge, over the forest and through the trees",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/4-photo-by-maurice-laschet-from-pexels.jpg",
-  },
-  {
-    name: "Tunnel with morning light",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/5-photo-by-van-anh-nguyen-from-pexels.jpg",
-  },
-  {
-    name: "Mountain house",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/6-photo-by-moritz-feldmann-from-pexels.jpg",
-  },
-];
+// profile / header
+const headerLogoEl = document.querySelector(".header__logo");
+const profileAvatarEl = document.querySelector(".profile__avatar");
+const profileNameEl = document.querySelector(".profile__name");
+const profileDescriptionEl = document.querySelector(".profile__description");
 
-/*Cards*/
-const cardsList = document.querySelector(".cards__list");
-const cardTemplate = document
-  .querySelector("#card-template")
-  .content.querySelector(".card");
-
-/*Edit Profile modal*/
+// profile buttons
 const editProfileBtn = document.querySelector(".profile__edit-btn");
+const newPostBtn = document.querySelector(".profile__add-btn");
+const avatarBtn = document.querySelector(".profile__avatar-btn");
+
+// modals
 const editProfileModal = document.querySelector("#edit-profile-modal");
+const newPostModal = document.querySelector("#new-post-modal");
+const avatarModal = document.querySelector("#edit-avatar-modal");
+const previewModal = document.querySelector("#preview-modal");
+
+// close buttons (inside each modal)
 const editProfileCloseBtn = editProfileModal.querySelector(".modal__close-btn");
+const newPostCloseBtn = newPostModal.querySelector(".modal__close-btn");
+const avatarCloseBtn = avatarModal.querySelector(".modal__close-btn");
+const previewCloseBtn = previewModal.querySelector(
+  ".modal__close-btn_type_preview"
+);
+
+// forms
 const editProfileForm = editProfileModal.querySelector(".modal__form");
+const newPostForm = newPostModal.querySelector(".modal__form");
+const avatarForm = avatarModal.querySelector(".modal__form");
+
+// form inputs
 const editProfileNameInput = editProfileModal.querySelector(
   "#profile-name-input"
 );
 const editProfileDescriptionInput = editProfileModal.querySelector(
   "#profile-description-input"
 );
-
-/*New Post modal*/
-const newPostBtn = document.querySelector(".profile__add-btn");
-const newPostModal = document.querySelector("#new-post-modal");
-const newPostProfileForm = newPostModal.querySelector(".modal__form");
-const newPostCloseBtn = newPostModal.querySelector(".modal__close-btn");
 const newPostImageInput = newPostModal.querySelector("#card-image-input");
-const newPostCaptionInput = newPostModal.querySelector(
-  "#profile-description-input-caption"
-);
+const newPostTitleInput = newPostModal.querySelector("#card-title-input");
+const avatarLinkInput = avatarModal.querySelector("#avatar-link-input");
 
-/*Profile info*/
-const profileNameEl = document.querySelector(".profile__name");
-const profileDescriptionEl = document.querySelector(".profile__description");
+// preview modal elements
+const previewImageEl = previewModal.querySelector(".modal__image");
+const previewTitleEl = previewModal.querySelector(".modal__titles");
 
-/*Preview modal*/
-const previewModal = document.getElementById("preview-modal");
-const modalImage = previewModal.querySelector(".modal__image");
-const modalTitle = previewModal.querySelector(".modal__titles");
-const modalClose = previewModal.querySelector(".modal__close-btn_type_preview");
+// cards section
+const cardsList = document.querySelector(".cards__list");
+const cardTemplate = document
+  .querySelector("#card-template")
+  .content.querySelector(".card");
 
-function getCardElement(data) {
+// ===== INITIAL STATIC SETUP =====
+
+// set logo + default avatar if not set yet
+if (headerLogoEl) {
+  headerLogoEl.src = logoUrl;
+}
+if (profileAvatarEl) {
+  profileAvatarEl.src = avatarFallbackUrl;
+}
+
+// ===== API INSTANCE =====
+// NOTE: replace YOUR_TOKEN_HERE with your actual personal token
+const api = new Api({
+  baseUrl: "https://around-api.en.tripleten-services.com/v1",
+  headers: {
+    authorization: "dcd11bf2-d570-4463-92c6-86c6fdc192dd",
+    "Content-Type": "application/json",
+  },
+});
+
+// ===== CARD CREATION =====
+
+function createCardElement(cardData) {
+  // cardData should have { name, link, _id? }
   const cardElement = cardTemplate.cloneNode(true);
+
+  const cardImgEl = cardElement.querySelector(".card__image");
   const cardTitleEl = cardElement.querySelector(".card__title");
-  const cardImageEl = cardElement.querySelector(".card__image");
+  const likeBtnEl = cardElement.querySelector(".card__like-btn");
+  const deleteBtnEl = cardElement.querySelector(".card__delete-button");
 
-  /*Populate data*/
-  cardImageEl.src = data.link;
-  cardImageEl.alt = data.name;
-  cardTitleEl.textContent = data.name;
+  // fill content
+  cardImgEl.src = cardData.link;
+  cardImgEl.alt = cardData.name;
+  cardTitleEl.textContent = cardData.name;
 
-  /*Like button*/
-  const cardLikeBtnEl = cardElement.querySelector(".card__like-btn");
-  cardLikeBtnEl.addEventListener("click", () => {
-    cardLikeBtnEl.classList.toggle("card__like-btn_active");
+  // open preview when clicking image
+  cardImgEl.addEventListener("click", () => {
+    openImagePreview(cardData.link, cardData.name);
   });
 
-  /*Delete button*/
-  const cardDeleteBtnEl = cardElement.querySelector(".card__delete-button");
-  cardDeleteBtnEl.addEventListener("click", () => {
+  // like toggle (UI only for now - server hook comes later)
+  likeBtnEl.addEventListener("click", () => {
+    likeBtnEl.classList.toggle("card__like-btn_active");
+  });
+
+  // delete card (server delete will come later)
+  deleteBtnEl.addEventListener("click", () => {
     cardElement.remove();
-  });
-
-  /*Preview click*/
-  cardImageEl.addEventListener("click", () => {
-    modalImage.src = data.link;
-    modalImage.alt = data.name;
-    modalTitle.textContent = data.name;
-    openModal(previewModal);
   });
 
   return cardElement;
 }
 
-/*Edit Profile*/
+function prependCard(cardData) {
+  const newCard = createCardElement(cardData);
+  cardsList.prepend(newCard);
+}
+
+// ===== PREVIEW MODAL LOGIC =====
+
+function openImagePreview(link, title) {
+  previewImageEl.src = link;
+  previewImageEl.alt = title;
+  previewTitleEl.textContent = title;
+  openModal(previewModal);
+}
+
+// ===== FORM HANDLERS =====
+
+// 1. Edit Profile form
 function handleEditProfileSubmit(evt) {
   evt.preventDefault();
-  profileNameEl.textContent = editProfileNameInput.value;
-  profileDescriptionEl.textContent = editProfileDescriptionInput.value;
-  closeModal(editProfileModal);
+
+  const newName = editProfileNameInput.value;
+  const newAbout = editProfileDescriptionInput.value;
+
+  // show loading text
+  const submitBtn = editProfileForm.querySelector(".modal__submit-btn");
+  const originalBtnText = submitBtn.textContent;
+  submitBtn.textContent = "Saving...";
+
+  api
+    .editUserInfo({ name: newName, about: newAbout })
+    .then((userData) => {
+      // update UI based on what server says, not just inputs
+      profileNameEl.textContent = userData.name;
+      profileDescriptionEl.textContent = userData.about;
+      closeModal(editProfileModal);
+    })
+    .catch(console.error)
+    .finally(() => {
+      submitBtn.textContent = originalBtnText;
+    });
 }
 
-validator.clearErrorUI(editProfileForm);
-validator.toggleButtonState(editProfileForm);
-
-/*New Post*/
-function handleNewPostProfileSubmit(evt) {
+// 2. New Post form
+function handleNewPostSubmit(evt) {
   evt.preventDefault();
 
-  const cardData = {
-    name: newPostCaptionInput.value,
-    link: newPostImageInput.value,
-  };
+  const name = newPostTitleInput.value;
+  const link = newPostImageInput.value;
 
-  cardsList.prepend(getCardElement(cardData));
-  closeModal(newPostModal);
-  newPostProfileForm.reset();
+  const submitBtn = newPostForm.querySelector(".modal__submit-btn");
+  const originalBtnText = submitBtn.textContent;
+  submitBtn.textContent = "Saving...";
 
-  validator.resetFormUI(newPostProfileForm);
+  api
+    .addCard({ name, link })
+    .then((cardFromServer) => {
+      // cardFromServer will have _id etc
+      prependCard(cardFromServer);
+      newPostForm.reset();
+      closeModal(newPostModal);
+      validator.resetFormUI(newPostForm);
+    })
+    .catch(console.error)
+    .finally(() => {
+      submitBtn.textContent = originalBtnText;
+    });
 }
 
-/*Profile modal*/
+// 3. Avatar form
+function handleAvatarSubmit(evt) {
+  evt.preventDefault();
+
+  const avatarLink = avatarLinkInput.value;
+
+  const submitBtn = avatarForm.querySelector(".modal__submit-btn");
+  const originalBtnText = submitBtn.textContent;
+  submitBtn.textContent = "Saving...";
+
+  api
+    .editAvatarInfo(avatarLink)
+    .then((userData) => {
+      // update avatar on page with what server returns
+      profileAvatarEl.src = userData.avatar;
+      avatarForm.reset();
+      closeModal(avatarModal);
+      validator.resetFormUI(avatarForm);
+    })
+    .catch(console.error)
+    .finally(() => {
+      submitBtn.textContent = originalBtnText;
+    });
+}
+
+// ===== OPEN/CLOSE MODALS =====
+
+// open edit profile
 editProfileBtn.addEventListener("click", () => {
+  // preload current values into form
   editProfileNameInput.value = profileNameEl.textContent;
   editProfileDescriptionInput.value = profileDescriptionEl.textContent;
 
@@ -152,38 +228,61 @@ editProfileBtn.addEventListener("click", () => {
 
   openModal(editProfileModal);
 });
+
+// open new post
+newPostBtn.addEventListener("click", () => {
+  validator.resetFormUI(newPostForm);
+  openModal(newPostModal);
+});
+
+// open avatar edit
+avatarBtn.addEventListener("click", () => {
+  validator.resetFormUI(avatarForm);
+  openModal(avatarModal);
+});
+
+// close buttons
 editProfileCloseBtn.addEventListener("click", () =>
   closeModal(editProfileModal)
 );
+newPostCloseBtn.addEventListener("click", () => closeModal(newPostModal));
+avatarCloseBtn.addEventListener("click", () => closeModal(avatarModal));
+previewCloseBtn.addEventListener("click", () => closeModal(previewModal));
+
+// submit listeners
 editProfileForm.addEventListener("submit", handleEditProfileSubmit);
+newPostForm.addEventListener("submit", handleNewPostSubmit);
+avatarForm.addEventListener("submit", handleAvatarSubmit);
 
-/*New Post modal*/
-newPostBtn.addEventListener("click", () => {
-  validator.resetFormUI(newPostProfileForm);
-  openModal(newPostModal);
-});
-newPostCloseBtn.addEventListener("click", () => {
-  validator.resetFormUI(newPostProfileForm);
-  closeModal(newPostModal);
-});
-newPostProfileForm.addEventListener("submit", handleNewPostProfileSubmit);
+// ===== ESC / OVERLAY CLOSE (optional if modal.js already handles it) =====
+// if your modal.js already wires up Escape / overlay close globally,
+// you don't need to repeat it here.
 
-/*Preview modal*/
-modalClose.addEventListener("click", () => closeModal(previewModal));
+// ===== INITIAL LOAD FROM API =====
+//
+// We want:
+// - user info (name, about, avatar)
+// - card list
+//
+// Your Api class will return Promise.all([user, cards]) in something like getAppInfo().
+// We'll expect it to give { user, cards } so we can use both.
 
-initialCards.forEach((item) => {
-  cardsList.append(getCardElement(item));
-});
+api
+  .getAppInfo()
+  .then(({ user, cards }) => {
+    // 1. set profile info
+    profileNameEl.textContent = user.name;
+    profileDescriptionEl.textContent = user.about;
+    profileAvatarEl.src = user.avatar || avatarFallbackUrl;
 
-function handleEscClose(evt) {
-  if (evt.key === "Escape" || evt.key === "Esc") {
-    const opened = document.querySelector(".modal.modal_is-opened");
-    if (opened) closeModal(opened);
-  }
-}
-
-function handleOverlayClick(evt) {
-  if (evt.target === evt.currentTarget) {
-    closeModal(evt.currentTarget);
-  }
-}
+    // 2. render cards
+    cards.forEach((card) => {
+      const cardEl = createCardElement({
+        name: card.name,
+        link: card.link,
+        _id: card._id,
+      });
+      cardsList.append(cardEl);
+    });
+  })
+  .catch(console.error);
