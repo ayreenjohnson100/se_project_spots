@@ -3,31 +3,28 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Spots Project — Share your adventures" />
+    <meta name="description" content="Spots project" />
     <meta name="author" content="Ayreen Johnson" />
     <title>Spots</title>
   </head>
 
   <body class="page">
-    <!-- ===== HEADER ===== -->
     <header class="header">
       <img
         class="header__logo"
         src="<%= require('./images/Logo.svg') %>"
-        alt="Spots Logo"
+        alt="Spots logo"
       />
     </header>
 
-    <!-- ===== MAIN CONTENT ===== -->
     <main class="content">
-      <!-- === Profile Section === -->
       <section class="profile page__section">
         <div class="profile__avatar-container">
           <button class="profile__avatar-btn" type="button">
             <img
               class="profile__avatar"
-              src="<%= require('./images/AvatarProject9.png') %>"
-              alt="Profile Avatar"
+              src="<%= require('./images/avatar.jpg') %>"
+              alt="Profile avatar"
             />
           </button>
         </div>
@@ -35,11 +32,12 @@
         <div class="profile__column">
           <h1 class="profile__name">Placeholder name</h1>
           <p class="profile__description">Placeholder description</p>
+
           <button class="profile__edit-btn" type="button">
             <img
               class="profile__pencil"
               src="<%= require('./images/pencil.svg') %>"
-              alt="Edit Profile"
+              alt="Edit profile"
             />
             Edit Profile
           </button>
@@ -49,17 +47,15 @@
           <img
             class="profile__plus"
             src="<%= require('./images/plus.svg') %>"
-            alt="Add Post"
+            alt="Add post"
           />
-          + New Post
+          New Post
         </button>
       </section>
 
-      <!-- === Cards Section (will be rendered from JS) === -->
       <section class="cards page__section">
         <ul class="cards__list"></ul>
 
-        <!-- Card Template -->
         <template id="card-template">
           <li class="card">
             <button
@@ -68,13 +64,13 @@
               aria-label="Delete card"
             ></button>
 
-            <img src="" alt="" class="card__image" />
+            <img class="card__image" src="" alt="" />
 
             <div class="card__content">
               <h2 class="card__title"></h2>
               <button
-                type="button"
                 class="card__like-btn"
+                type="button"
                 aria-label="Like card"
               ></button>
             </div>
@@ -83,129 +79,136 @@
       </section>
     </main>
 
-    <!-- ===== FOOTER ===== -->
     <footer class="footer page__section">
       <p class="footer__copyright">© 2025 Spots</p>
     </footer>
 
-    <!-- ===== MODALS ===== -->
-
-    <!-- Edit Profile Modal -->
     <div class="modal" id="edit-profile-modal">
       <div class="modal__container">
         <button type="button" class="modal__close-btn">
-          <img
-            src="<%= require('./images/x-button2.svg') %>"
-            alt="Close button"
-          />
+          <img src="<%= require('./images/x-button2.svg') %>" alt="Close" />
         </button>
+
         <h2 class="modal__title">Edit profile</h2>
+
         <form class="modal__form" name="edit-profile-form" novalidate>
           <label class="modal__label">
             Name
             <input
               type="text"
-              name="name"
-              id="profile-name-input"
               class="modal__input"
-              required
+              id="profile-name-input"
               minlength="2"
               maxlength="40"
+              required
             />
             <span class="modal__error" id="profile-name-input-error"></span>
           </label>
+
           <label class="modal__label">
             Description
             <input
               type="text"
-              name="description"
-              id="profile-description-input"
               class="modal__input"
-              required
+              id="profile-description-input"
               minlength="2"
               maxlength="200"
+              required
             />
             <span
               class="modal__error"
               id="profile-description-input-error"
             ></span>
           </label>
+
           <button type="submit" class="modal__submit-btn">Save</button>
         </form>
       </div>
     </div>
 
-    <!-- New Post Modal -->
+    <!-- New Post -->
     <div class="modal" id="new-post-modal">
       <div class="modal__container">
         <button type="button" class="modal__close-btn">
-          <img
-            src="<%= require('./images/x-button2.svg') %>"
-            alt="Close button"
-          />
+          <img src="<%= require('./images/x-button2.svg') %>" alt="Close" />
         </button>
+
         <h2 class="modal__title">New Post</h2>
+
         <form class="modal__form" name="new-post-form" novalidate>
           <label class="modal__label">
             Image link
             <input
               type="url"
-              name="link"
-              id="card-image-input"
               class="modal__input"
-              placeholder="Paste image URL"
+              id="card-image-input"
               required
             />
             <span class="modal__error" id="card-image-input-error"></span>
           </label>
+
           <label class="modal__label">
             Title
             <input
               type="text"
-              name="name"
-              id="card-title-input"
               class="modal__input"
-              placeholder="Title"
-              required
+              id="card-title-input"
               minlength="2"
               maxlength="30"
+              required
             />
             <span class="modal__error" id="card-title-input-error"></span>
           </label>
+
           <button type="submit" class="modal__submit-btn">Create</button>
         </form>
       </div>
     </div>
 
-    <!-- Avatar Modal -->
     <div class="modal" id="edit-avatar-modal">
       <div class="modal__container">
         <button type="button" class="modal__close-btn">
-          <img
-            src="<%= require('./images/x-button2.svg') %>"
-            alt="Close button"
-          />
+          <img src="<%= require('./images/x-button2.svg') %>" alt="Close" />
         </button>
+
         <h2 class="modal__title">Change Avatar</h2>
+
         <form class="modal__form" name="edit-avatar-form" novalidate>
           <label class="modal__label">
             Avatar link
             <input
               type="url"
-              name="avatar"
-              id="avatar-link-input"
               class="modal__input"
-              placeholder="Paste avatar link"
+              id="avatar-link-input"
               required
             />
             <span class="modal__error" id="avatar-link-input-error"></span>
           </label>
+
           <button type="submit" class="modal__submit-btn">Save</button>
         </form>
       </div>
     </div>
 
-    <!-- Image Preview Modal -->
+    <div class="modal" id="delete-card-modal">
+      <div class="modal__container">
+        <button type="button" class="modal__close-btn">
+          <img src="<%= require('./images/x-button2.svg') %>" alt="Close" />
+        </button>
+
+        <h2 class="modal__title">
+          Are you sure you want to delete this image?
+        </h2>
+
+        <form class="modal__form" name="delete-card-form" novalidate>
+          <div class="modal__button-row">
+            <button type="submit" class="modal__submit-btn">Delete</button>
+            <button type="button" class="modal__cancel-btn">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
     <div class="modal modal_type_preview" id="preview-modal">
       <div class="modal__image-container">
         <button
@@ -215,11 +218,10 @@
           <img
             src="<%= require('./images/Hover-X.svg') %>"
             alt="Close preview"
-            class="modal__x"
           />
         </button>
 
-        <img src="#" alt="" class="modal__image" />
+        <img class="modal__image" src="#" alt="" />
         <p class="modal__titles"></p>
       </div>
     </div>
