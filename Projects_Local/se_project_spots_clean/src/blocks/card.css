@@ -1,0 +1,98 @@
+/* ===== CARD ===== */
+.card {
+  max-width: 413px;
+  position: relative;
+}
+
+/* ===== CARD IMAGE ===== */
+.card__image {
+  height: 413px;
+  width: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* ===== DELETE BUTTON ===== */
+.card__delete-button {
+  background-image: url(../images/Default-Trash-Btn.svg);
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  top: 10px;
+  right: 10px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+.card__delete-button:hover {
+  background-image: url(../images/State=Hover.svg);
+}
+
+/* ===== LIKE BUTTON ===== */
+.card__like-btn {
+  background-image: url(../images/heart.svg);
+  width: 23px;
+  height: 20px;
+
+  opacity: 0.4;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+
+  transition: opacity 0.3s ease;
+}
+
+.card__like-btn:hover {
+  opacity: 1;
+}
+
+/* 🔥 ACTIVE (LIKED) STATE 🔥 */
+.card__like-btn_active {
+  background-image: url(../images/Pink-Heart-Btn.svg);
+  opacity: 1;
+}
+
+/* ===== CARD CONTENT ===== */
+.card__content {
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* ===== CARD TITLE ===== */
+.card__title {
+  font-family: "Poppins", Arial, sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+  margin: 0;
+  line-height: normal;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 300px;
+}
+
+/* ===== MOBILE ===== */
+@media screen and (max-width: 627px) {
+  .card__image {
+    height: 288px;
+  }
+
+  .card__title {
+    font-size: 16px;
+    max-width: 250px;
+  }
+}

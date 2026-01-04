@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Spots project" />
+    <meta name="author" content="Ayreen Johnson" />
+    <title>Spots</title>
+  </head>
+
+  <body class="page">
+    <header class="header">
+      <img
+        class="header__logo"
+        src="<%= require('./images/Logo.svg') %>"
+        alt="Spots logo"
+      />
+    </header>
+
+    <main class="content">
+      <section class="profile page__section">
+        <div class="profile__avatar-container">
+          <button class="profile__avatar-btn" type="button">
+            <img
+              class="profile__avatar"
+              src="<%= require('./images/avatar.jpg') %>"
+              alt="Profile avatar"
+            />
+          </button>
+        </div>
+
+        <div class="profile__column">
+          <h1 class="profile__name">Placeholder name</h1>
+          <p class="profile__description">Placeholder description</p>
+
+          <button class="profile__edit-btn" type="button">
+            <img
+              class="profile__pencil"
+              src="<%= require('./images/pencil.svg') %>"
+              alt="Edit profile"
+            />
+            Edit Profile
+          </button>
+        </div>
+
+        <button class="profile__add-btn" type="button">
+          <img
+            class="profile__plus"
+            src="<%= require('./images/plus.svg') %>"
+            alt="Add post"
+          />
+          New Post
+        </button>
+      </section>
+
+      <section class="cards page__section">
+        <ul class="cards__list"></ul>
+
+        <template id="card-template">
+          <li class="card">
+            <button
+              class="card__delete-button"
+              type="button"
+              aria-label="Delete card"
+            ></button>
+
+            <img class="card__image" src="" alt="" />
+
+            <div class="card__content">
+              <h2 class="card__title"></h2>
+              <button
+                class="card__like-btn"
+                type="button"
+                aria-label="Like card"
+              ></button>
+            </div>
+          </li>
+        </template>
+      </section>
+    </main>
+
+    <footer class="footer page__section">
+      <p class="footer__copyright">© 2025 Spots</p>
+    </footer>
+
+    <div class="modal" id="edit-profile-modal">
+      <div class="modal__container">
+        <button type="button" class="modal__close-btn">
+          <img src="<%= require('./images/x-button2.svg') %>" alt="Close" />
+        </button>
+
+        <h2 class="modal__title">Edit profile</h2>
+
+        <form class="modal__form" name="edit-profile-form" novalidate>
+          <label class="modal__label">
+            Name
+            <input
+              type="text"
+              class="modal__input"
+              id="profile-name-input"
+              minlength="2"
+              maxlength="40"
+              required
+            />
+            <span class="modal__error" id="profile-name-input-error"></span>
+          </label>
+
+          <label class="modal__label">
+            Description
+            <input
+              type="text"
+              class="modal__input"
+              id="profile-description-input"
+              minlength="2"
+              maxlength="200"
+              required
+            />
+            <span
+              class="modal__error"
+              id="profile-description-input-error"
+            ></span>
+          </label>
+
+          <button type="submit" class="modal__submit-btn">Save</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- New Post -->
+    <div class="modal" id="new-post-modal">
+      <div class="modal__container">
+        <button type="button" class="modal__close-btn">
+          <img src="<%= require('./images/x-button2.svg') %>" alt="Close" />
+        </button>
+
+        <h2 class="modal__title">New Post</h2>
+
+        <form class="modal__form" name="new-post-form" novalidate>
+          <label class="modal__label">
+            Image link
+            <input
+              type="url"
+              class="modal__input"
+              id="card-image-input"
+              required
+            />
+            <span class="modal__error" id="card-image-input-error"></span>
+          </label>
+
+          <label class="modal__label">
+            Title
+            <input
+              type="text"
+              class="modal__input"
+              id="card-title-input"
+              minlength="2"
+              maxlength="30"
+              required
+            />
+            <span class="modal__error" id="card-title-input-error"></span>
+          </label>
+
+          <button type="submit" class="modal__submit-btn">Create</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="modal" id="edit-avatar-modal">
+      <div class="modal__container">
+        <button type="button" class="modal__close-btn">
+          <img src="<%= require('./images/x-button2.svg') %>" alt="Close" />
+        </button>
+
+        <h2 class="modal__title">Change Avatar</h2>
+
+        <form class="modal__form" name="edit-avatar-form" novalidate>
+          <label class="modal__label">
+            Avatar link
+            <input
+              type="url"
+              class="modal__input"
+              id="avatar-link-input"
+              required
+            />
+            <span class="modal__error" id="avatar-link-input-error"></span>
+          </label>
+
+          <button type="submit" class="modal__submit-btn">Save</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="modal" id="delete-card-modal">
+      <div class="modal__container">
+        <button type="button" class="modal__close-btn">
+          <img src="<%= require('./images/x-button2.svg') %>" alt="Close" />
+        </button>
+
+        <h2 class="modal__title">
+          Are you sure you want to delete this image?
+        </h2>
+
+        <form class="modal__form" name="delete-card-form" novalidate>
+          <div class="modal__button-row">
+            <button type="submit" class="modal__submit-btn">Delete</button>
+            <button type="button" class="modal__cancel-btn">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="modal modal_type_preview" id="preview-modal">
+      <div class="modal__image-container">
+        <button
+          type="button"
+          class="modal__close-btn modal__close-btn_type_preview"
+        >
+          <img
+            src="<%= require('./images/Hover-X.svg') %>"
+            alt="Close preview"
+          />
+        </button>
+
+        <img class="modal__image" src="#" alt="" />
+        <p class="modal__titles"></p>
+      </div>
+    </div>
+  </body>
+</html>
