@@ -1,86 +1,80 @@
 // src/utils/Api.js
-
 class Api {
   constructor({ baseUrl, headers }) {
     this._baseUrl = baseUrl;
     this._headers = headers;
   }
 
-  // private helper
-  // arrow function keeps `this` bound correctly
-  _checkResponse = (res) => {
+  _checkResponse(res) {
     if (res.ok) {
       return res.json();
     }
     return Promise.reject(`Error: ${res.status}`);
-  };
+  }
 
-  // USERS
-
-  // GET /users/me
   getUserInfo() {
     return fetch(`${this._baseUrl}/users/me`, {
       headers: this._headers,
-    }).then(this._checkResponse);
+    }).then((res) => this._checkResponse(res));
   }
 
-  // PATCH /users/me
-  updateUserInfo({ name, about }) {
+  getInitialCards() {
+    return fetch(`${this._baseUrl}/cards`, {
+      headers: this._headers,
+    }).then((res) => this._checkResponse(res));
+  }
+
+  editUserInfo({ name, about }) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: "PATCH",
       headers: this._headers,
       body: JSON.stringify({ name, about }),
-    }).then(this._checkResponse);
+    }).then((res) => this._checkResponse(res));
   }
 
-  // PATCH /users/me/avatar
-  updateAvatar(avatarUrl) {
+  editAvatarInfo(avatar) {
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: "PATCH",
       headers: this._headers,
-      body: JSON.stringify({ avatar: avatarUrl }),
-    }).then(this._checkResponse);
+      body: JSON.stringify({ avatar }),
+    }).then((res) => this._checkResponse(res));
   }
 
-  // CARDS
-
-  // GET /cards
-  getInitialCards() {
-    return fetch(`${this._baseUrl}/cards`, {
-      headers: this._headers,
-    }).then(this._checkResponse);
-  }
-
-  // POST /cards
   addCard({ name, link }) {
     return fetch(`${this._baseUrl}/cards`, {
       method: "POST",
       headers: this._headers,
       body: JSON.stringify({ name, link }),
-    }).then(this._checkResponse);
+    }).then((res) => this._checkResponse(res));
   }
 
-  // DELETE /cards/:cardId
-  deleteCard(cardId) {
+  removeCard(cardId) {
     return fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: "DELETE",
       headers: this._headers,
-    }).then(this._checkResponse);
+    }).then((res) => this._checkResponse(res));
   }
 
-  // PUT or DELETE /cards/:cardId/likes
-  changeLikeCardStatus(cardId, shouldLike) {
+  addLike(cardId) {
     return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
-      method: shouldLike ? "PUT" : "DELETE",
+      method: "PUT",
       headers: this._headers,
-    }).then(this._checkResponse);
+    }).then((res) => this._checkResponse(res));
   }
 
-  // COMBINED STARTUP DATA
-  // returns { user, cards }
+  removeLike(cardId) {
+    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
+      method: "DELETE",
+      headers: this._headers,
+    }).then((res) => this._checkResponse(res));
+  }
+
+  // IMPORTANT: returns [userData, cardsData]
   getAppInfo() {
     return Promise.all([this.getUserInfo(), this.getInitialCards()]).then(
-      ([user, cards]) => ({ user, cards })
+      ([user, cards]) => {
+        return { user, cards }; // <— key line
+      }
     );
   }
 }
