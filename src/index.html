@@ -9,53 +9,42 @@
   </head>
 
   <body class="page">
-    <!-- ===== HEADER ===== -->
+    <!-- HEADER -->
     <header class="header">
-      <img
-        class="header__logo"
-        src="<%= require('./images/Logo.svg') %>"
-        alt="Spots Logo"
-      />
+      <img class="header__logo" src="#" alt="Spots Logo" />
     </header>
 
-    <!-- ===== MAIN CONTENT ===== -->
+    <!-- MAIN CONTENT -->
     <main class="content">
       <!-- === Profile Section === -->
       <section class="profile page__section">
         <div class="profile__avatar-container">
-          <button class="profile__avatar-btn" type="button">
-            <img
-              class="profile__avatar"
-              src="<%= require('./images/AvatarProject9.png') %>"
-              alt="Profile Avatar"
-            />
+          <button
+            class="profile__avatar-btn"
+            type="button"
+            aria-label="Change avatar"
+          >
+            <img class="profile__avatar" src="#" alt="Profile avatar" />
           </button>
         </div>
 
         <div class="profile__column">
           <h1 class="profile__name">Placeholder name</h1>
           <p class="profile__description">Placeholder description</p>
+
           <button class="profile__edit-btn" type="button">
-            <img
-              class="profile__pencil"
-              src="<%= require('./images/pencil.svg') %>"
-              alt="Edit Profile"
-            />
+            <img class="profile__pencil" src="#" alt="Edit profile" />
             Edit Profile
           </button>
         </div>
 
         <button class="profile__add-btn" type="button">
-          <img
-            class="profile__plus"
-            src="<%= require('./images/plus.svg') %>"
-            alt="Add Post"
-          />
-          + New Post
+          <img class="profile__plus" src="#" alt="Add post" />
+          New Post
         </button>
       </section>
 
-      <!-- === Cards Section (will be rendered from JS) === -->
+      <!-- Cards Section (rendered from JS) -->
       <section class="cards page__section">
         <ul class="cards__list"></ul>
 
@@ -68,38 +57,41 @@
               aria-label="Delete card"
             ></button>
 
-            <img src="#" alt="" class="card__image" />
+            <img class="card__image" src="#" alt="" />
 
             <div class="card__content">
               <h2 class="card__title"></h2>
+
+              <!-- LIKE BUTTON ICON FIX -->
               <button
                 type="button"
                 class="card__like-btn"
                 aria-label="Like card"
-              ></button>
+              >
+                <img class="card__like-icon" src="#" alt="Like" />
+              </button>
             </div>
           </li>
         </template>
       </section>
     </main>
 
-    <!-- ===== FOOTER ===== -->
+    <!-- FOOTER -->
     <footer class="footer page__section">
       <p class="footer__copyright">© 2025 Spots</p>
     </footer>
 
-    <!-- ===== MODALS ===== -->
+    <!-- MODALS -->
 
     <!-- Edit Profile Modal -->
     <div class="modal" id="edit-profile-modal">
       <div class="modal__container">
-        <button type="button" class="modal__close-btn">
-          <img
-            src="<%= require('./images/x-button2.svg') %>"
-            alt="Close button"
-          />
+        <button type="button" class="modal__close-btn" aria-label="Close">
+          <img class="modal__close-icon" src="#" alt="Close" />
         </button>
+
         <h2 class="modal__title">Edit profile</h2>
+
         <form class="modal__form" name="edit-profile-form" novalidate>
           <label class="modal__label">
             Name
@@ -114,6 +106,7 @@
             />
             <span class="modal__error" id="profile-name-input-error"></span>
           </label>
+
           <label class="modal__label">
             Description
             <input
@@ -130,6 +123,7 @@
               id="profile-description-input-error"
             ></span>
           </label>
+
           <button type="submit" class="modal__submit-btn">Save</button>
         </form>
       </div>
@@ -138,13 +132,12 @@
     <!-- New Post Modal -->
     <div class="modal" id="new-post-modal">
       <div class="modal__container">
-        <button type="button" class="modal__close-btn">
-          <img
-            src="<%= require('./images/x-button2.svg') %>"
-            alt="Close button"
-          />
+        <button type="button" class="modal__close-btn" aria-label="Close">
+          <img class="modal__close-icon" src="#" alt="Close" />
         </button>
+
         <h2 class="modal__title">New Post</h2>
+
         <form class="modal__form" name="new-post-form" novalidate>
           <label class="modal__label">
             Image link
@@ -158,6 +151,7 @@
             />
             <span class="modal__error" id="card-image-input-error"></span>
           </label>
+
           <label class="modal__label">
             Title
             <input
@@ -172,6 +166,7 @@
             />
             <span class="modal__error" id="card-title-input-error"></span>
           </label>
+
           <button type="submit" class="modal__submit-btn">Create</button>
         </form>
       </div>
@@ -180,13 +175,12 @@
     <!-- Avatar Modal -->
     <div class="modal" id="edit-avatar-modal">
       <div class="modal__container">
-        <button type="button" class="modal__close-btn">
-          <img
-            src="<%= require('./images/x-button2.svg') %>"
-            alt="Close button"
-          />
+        <button type="button" class="modal__close-btn" aria-label="Close">
+          <img class="modal__close-icon" src="#" alt="Close" />
         </button>
+
         <h2 class="modal__title">Change Avatar</h2>
+
         <form class="modal__form" name="edit-avatar-form" novalidate>
           <label class="modal__label">
             Avatar link
@@ -200,7 +194,28 @@
             />
             <span class="modal__error" id="avatar-link-input-error"></span>
           </label>
+
           <button type="submit" class="modal__submit-btn">Save</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Delete Confirmation Modal (REQUIRED) -->
+    <div class="modal" id="delete-card-modal">
+      <div class="modal__container modal__container_type_delete">
+        <button type="button" class="modal__close-btn" aria-label="Close">
+          <img class="modal__close-icon" src="#" alt="Close" />
+        </button>
+
+        <h2 class="modal__title modal__title_type_delete">Delete card?</h2>
+
+        <form class="modal__form" name="delete-card-form" novalidate>
+          <button
+            type="submit"
+            class="modal__submit-btn modal__submit-btn_type_delete"
+          >
+            Yes
+          </button>
         </form>
       </div>
     </div>
@@ -211,12 +226,9 @@
         <button
           type="button"
           class="modal__close-btn modal__close-btn_type_preview"
+          aria-label="Close preview"
         >
-          <img
-            src="<%= require('./images/Hover-X.svg') %>"
-            alt="Close preview"
-            class="modal__x"
-          />
+          <img class="modal__preview-close-icon" src="#" alt="Close preview" />
         </button>
 
         <img src="#" alt="" class="modal__image" />
