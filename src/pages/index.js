@@ -5,10 +5,9 @@ import "../vendor/fonts.css";
 
 import { validator } from "../scripts/validation.js";
 import { openModal, closeModal } from "../scripts/modal.js";
-
 import Api from "../utils/Api.js";
 
-// webpack-safe assets
+// webpack-safe assets (KEEP these for <img> icons in header/profile/modals)
 import logoUrl from "../images/Logo.svg";
 import avatarFallbackUrl from "../images/AvatarProject9.png";
 
@@ -16,12 +15,6 @@ import pencilUrl from "../images/pencil.svg";
 import plusUrl from "../images/plus.svg";
 import closeUrl from "../images/x-button2.svg";
 import previewCloseUrl from "../images/Hover-X.svg";
-
-import trashDefaultUrl from "../images/Default-Trash-Btn.svg";
-import trashHoverUrl from "../images/State=Hover.svg";
-
-import heartUrl from "../images/heart.svg";
-import heartActiveUrl from "../images/Pink-Heart-Btn.svg";
 
 // API INSTANCE
 const api = new Api({
@@ -32,7 +25,7 @@ const api = new Api({
   },
 });
 
-// DOM
+// DOM LOOKUPS
 const headerLogoEl = document.querySelector(".header__logo");
 
 const profileAvatarEl = document.querySelector(".profile__avatar");
@@ -80,7 +73,7 @@ const previewCloseBtn = previewModal.querySelector(
 );
 const deleteCloseBtn = deleteCardModal.querySelector(".modal__close-btn");
 
-// close icons
+// close icon images (your HTML has these img tags)
 editProfileModal.querySelector(".modal__close-icon").src = closeUrl;
 newPostModal.querySelector(".modal__close-icon").src = closeUrl;
 avatarModal.querySelector(".modal__close-icon").src = closeUrl;
@@ -124,20 +117,6 @@ function isCardLiked(cardData) {
   );
 }
 
-function applyLikeUI(likeIconEl, liked) {
-  likeIconEl.src = liked ? heartActiveUrl : heartUrl;
-}
-
-function applyTrashUI(deleteBtnEl) {
-  deleteBtnEl.style.backgroundImage = `url(${trashDefaultUrl})`;
-  deleteBtnEl.addEventListener("mouseenter", () => {
-    deleteBtnEl.style.backgroundImage = `url(${trashHoverUrl})`;
-  });
-  deleteBtnEl.addEventListener("mouseleave", () => {
-    deleteBtnEl.style.backgroundImage = `url(${trashDefaultUrl})`;
-  });
-}
-
 function openDeleteConfirm(cardId, cardEl) {
   pendingDeleteCardId = cardId;
   pendingDeleteCardEl = cardEl;
@@ -156,7 +135,6 @@ function createCardElement(cardData) {
   const cardImgEl = cardElement.querySelector(".card__image");
   const cardTitleEl = cardElement.querySelector(".card__title");
   const likeBtnEl = cardElement.querySelector(".card__like-btn");
-  const likeIconEl = cardElement.querySelector(".card__like-icon");
   const deleteBtnEl = cardElement.querySelector(".card__delete-button");
 
   // content
@@ -169,7 +147,7 @@ function createCardElement(cardData) {
     openImagePreview(cardData.link, cardData.name)
   );
 
-  // trash (only owner)
+  // delete visibility (only owner)
   if (
     cardData.owner &&
     cardData.owner._id &&
@@ -178,24 +156,26 @@ function createCardElement(cardData) {
   ) {
     deleteBtnEl.remove();
   } else {
-    applyTrashUI(deleteBtnEl);
     deleteBtnEl.addEventListener("click", () =>
       openDeleteConfirm(cardData._id, cardElement)
     );
   }
 
-  // initial like UI
-  applyLikeUI(likeIconEl, isCardLiked(cardData));
+  // INITIAL LIKE UI toggle class ONLY
+  likeBtnEl.classList.toggle("card__like-btn_active", isCardLiked(cardData));
 
-  // like click -> API persist
+  // LIKE CLICK API plus toggle class ONLY
   likeBtnEl.addEventListener("click", () => {
     const shouldLike = !isCardLiked(cardData);
 
     api
       .changeLikeCardStatus(cardData._id, shouldLike)
       .then((updatedCard) => {
-        cardData.likes = updatedCard.likes; // keep local in sync
-        applyLikeUI(likeIconEl, isCardLiked(cardData));
+        cardData.likes = updatedCard.likes;
+        likeBtnEl.classList.toggle(
+          "card__like-btn_active",
+          isCardLiked(cardData)
+        );
       })
       .catch(console.error);
   });
@@ -287,7 +267,7 @@ function handleDeleteConfirm(evt) {
     });
 }
 
-// ===== EVENTS =====
+// EVENTS
 editProfileBtn.addEventListener("click", () => {
   editProfileNameInput.value = profileNameEl.textContent;
   editProfileDescriptionInput.value = profileDescriptionEl.textContent;
