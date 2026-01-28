@@ -3,6 +3,7 @@
   position: relative;
 }
 
+/* ===== IMAGE ===== */
 .card__image {
   height: 413px;
   width: 100%;
@@ -12,6 +13,8 @@
   cursor: pointer;
 }
 
+/* ===== DELETE (TRASH) BUTTON ===== */
+/* ✅ Sprint 9 expected: CSS background-image */
 .card__delete-button {
   position: absolute;
   width: 32px;
@@ -23,33 +26,57 @@
   background-color: transparent;
   cursor: pointer;
 
+  background-image: url(../images/Default-Trash-Btn.svg);
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
-
-  transition: opacity 0.3s ease;
 }
 
 .card__delete-button:hover {
-  opacity: 0.8;
+  background-image: url(../images/State=Hover.svg);
 }
 
+/* ===== CARD CONTENT ===== */
+.card__content {
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* ===== TITLE ===== */
+.card__title {
+  font-family: "Poppins", Arial, sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+  margin: 0;
+
+  line-height: normal;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+
+  max-width: 340px;
+}
+
+/* ===== LIKE BUTTON ===== */
+/* ✅ Sprint 9 expected: CSS background-image + toggle class */
 .card__like-btn {
+  background-image: url(../images/heart.svg);
+
   width: 23px;
   height: 20px;
-  border: none;
-  padding: 0;
 
+  border: none;
   background-color: transparent;
   cursor: pointer;
 
-  background-image: url(../images/heart.svg);
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
 
   opacity: 0.4;
-  transition: opacity 0.2s ease;
+  transition: opacity 0.3s ease;
 }
 
 .card__like-btn:hover {
@@ -61,25 +88,7 @@
   opacity: 1;
 }
 
-.card__content {
-  margin-top: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.card__title {
-  font-family: "Poppins", Arial, sans-serif;
-  font-size: 20px;
-  font-weight: 500;
-  margin: 0;
-  line-height: normal;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-  max-width: none;
-}
-
+/* ===== MOBILE ===== */
 @media screen and (max-width: 627px) {
   .card__image {
     height: 288px;
