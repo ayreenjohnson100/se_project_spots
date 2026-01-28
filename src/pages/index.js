@@ -58,7 +58,7 @@ const editProfileCloseBtn = editProfileModal.querySelector(".modal__close-btn");
 const newPostCloseBtn = newPostModal.querySelector(".modal__close-btn");
 const avatarCloseBtn = avatarModal.querySelector(".modal__close-btn");
 const previewCloseBtn = previewModal.querySelector(
-  ".modal__close-btn_type_preview"
+  ".modal__close-btn_type_preview",
 );
 const deleteCloseBtn = deleteCardModal.querySelector(".modal__close-btn");
 
@@ -77,10 +77,10 @@ const deleteForm = deleteCardModal.querySelector(".modal__form");
 
 // Inputs
 const editProfileNameInput = editProfileModal.querySelector(
-  "#profile-name-input"
+  "#profile-name-input",
 );
 const editProfileDescriptionInput = editProfileModal.querySelector(
-  "#profile-description-input"
+  "#profile-description-input",
 );
 
 const newPostImageInput = newPostModal.querySelector("#card-image-input");
@@ -144,7 +144,7 @@ function resetDeletePending() {
   pendingDeleteCardEl = null;
 }
 
-// ===== CARD CREATION =====
+// CARD CREATION
 function createCardElement(cardData) {
   const cardElement = cardTemplate.cloneNode(true);
 
@@ -160,7 +160,7 @@ function createCardElement(cardData) {
 
   // Preview click
   cardImgEl.addEventListener("click", () =>
-    openImagePreview(cardData.link, cardData.name)
+    openImagePreview(cardData.link, cardData.name),
   );
 
   // Initial like state from server (CSS class toggles background image)
@@ -324,7 +324,7 @@ avatarBtn.addEventListener("click", () => {
 
 // close modals
 editProfileCloseBtn.addEventListener("click", () =>
-  closeModal(editProfileModal)
+  closeModal(editProfileModal),
 );
 newPostCloseBtn.addEventListener("click", () => closeModal(newPostModal));
 avatarCloseBtn.addEventListener("click", () => closeModal(avatarModal));

@@ -3,7 +3,6 @@
   position: relative;
 }
 
-/* ===== IMAGE ===== */
 .card__image {
   height: 413px;
   width: 100%;
@@ -13,8 +12,6 @@
   cursor: pointer;
 }
 
-/* ===== DELETE (TRASH) BUTTON ===== */
-/* ✅ Sprint 9 expected: CSS background-image */
 .card__delete-button {
   position: absolute;
   width: 32px;
@@ -36,7 +33,6 @@
   background-image: url(../images/State=Hover.svg);
 }
 
-/* ===== CARD CONTENT ===== */
 .card__content {
   margin-top: 12px;
   display: flex;
@@ -44,7 +40,6 @@
   justify-content: space-between;
 }
 
-/* ===== TITLE ===== */
 .card__title {
   font-family: "Poppins", Arial, sans-serif;
   font-size: 20px;
@@ -59,8 +54,6 @@
   max-width: 340px;
 }
 
-/* ===== LIKE BUTTON ===== */
-/* ✅ Sprint 9 expected: CSS background-image + toggle class */
 .card__like-btn {
   background-image: url(../images/heart.svg);
 
@@ -88,7 +81,6 @@
   opacity: 1;
 }
 
-/* ===== MOBILE ===== */
 @media screen and (max-width: 627px) {
   .card__image {
     height: 288px;
