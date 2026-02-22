@@ -23,14 +23,17 @@
   background-color: transparent;
   cursor: pointer;
 
-  background-image: url(../images/Default-Trash-Btn.svg);
+  /* JS sets background-image via imports */
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
+
+  opacity: 1;
+  transition: opacity 0.2s ease;
 }
 
 .card__delete-button:hover {
-  background-image: url(../images/State=Hover.svg);
+  opacity: 0.8;
 }
 
 .card__content {
@@ -55,8 +58,6 @@
 }
 
 .card__like-btn {
-  background-image: url(../images/heart.svg);
-
   width: 23px;
   height: 20px;
 
@@ -64,12 +65,13 @@
   background-color: transparent;
   cursor: pointer;
 
+  /* JS sets background-image via imports */
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
 
   opacity: 0.4;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.2s ease;
 }
 
 .card__like-btn:hover {
@@ -77,7 +79,6 @@
 }
 
 .card__like-btn_active {
-  background-image: url(../images/Pink-Heart-Btn.svg);
   opacity: 1;
 }
 

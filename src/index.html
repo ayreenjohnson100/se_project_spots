@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -57,6 +57,7 @@
               aria-label="Delete card"
             ></button>
 
+            <!-- keep non-empty src to avoid broken DOM issues in some builds -->
             <img class="card__image" src="#" alt="" />
 
             <div class="card__content">
@@ -176,17 +177,17 @@
           <img class="modal__close-icon" src="#" alt="Close" />
         </button>
 
-        <h2 class="modal__title">Change Avatar</h2>
+        <h2 class="modal__title">Edit profile avatar</h2>
 
         <form class="modal__form" name="edit-avatar-form" novalidate>
           <label class="modal__label">
-            Avatar link
+            Profile Picture
             <input
               type="url"
               name="avatar"
               id="avatar-link-input"
               class="modal__input"
-              placeholder="Paste avatar link"
+              placeholder="Paste the link to an image"
               required
             />
             <span class="modal__error" id="avatar-link-input-error"></span>

@@ -20,11 +20,16 @@ import plusUrl from "../images/plus.svg";
 import closeUrl from "../images/x-button2.svg";
 import previewCloseUrl from "../images/Hover-X.svg";
 
+import trashDefaultUrl from "../images/Default-Trash-Btn.svg";
+import trashHoverUrl from "../images/State=Hover.svg";
+import heartUrl from "../images/heart.svg";
+import heartActiveUrl from "../images/Pink-Heart-Btn.svg";
+
 // API INSTANCE
 const api = new Api({
   baseUrl: "https://around-api.en.tripleten-services.com/v1",
   headers: {
-    authorization: "dcd11bf2-d570-4463-92c6-86c6fdc192dd",
+    authorization: "dcd11bf2-d570-4463-92c6-86c6fdc192dd", //]
     "Content-Type": "application/json",
   },
 });
@@ -108,7 +113,6 @@ let pendingDeleteCardEl = null;
 // STATIC ICON SETUP
 headerLogoEl.src = logoUrl;
 profileAvatarEl.src = avatarFallbackUrl;
-
 pencilImgEl.src = pencilUrl;
 plusImgEl.src = plusUrl;
 
@@ -131,6 +135,23 @@ function isCardLiked(cardData) {
     Array.isArray(cardData.likes) &&
     cardData.likes.some((u) => u._id === currentUserId)
   );
+}
+
+function applyLikeUI(likeBtnEl, liked) {
+  likeBtnEl.style.backgroundImage = `url(${liked ? heartActiveUrl : heartUrl})`;
+  likeBtnEl.classList.toggle("card__like-btn_active", liked);
+}
+
+function applyTrashUI(deleteBtnEl) {
+  deleteBtnEl.style.backgroundImage = `url(${trashDefaultUrl})`;
+
+  deleteBtnEl.addEventListener("mouseenter", () => {
+    deleteBtnEl.style.backgroundImage = `url(${trashHoverUrl})`;
+  });
+
+  deleteBtnEl.addEventListener("mouseleave", () => {
+    deleteBtnEl.style.backgroundImage = `url(${trashDefaultUrl})`;
+  });
 }
 
 function openDeleteConfirm(cardId, cardEl) {
@@ -163,24 +184,25 @@ function createCardElement(cardData) {
     openImagePreview(cardData.link, cardData.name),
   );
 
-  // Initial like state from server (CSS class toggles background image)
-  likeBtnEl.classList.toggle("card__like-btn_active", isCardLiked(cardData));
+  // Initial like state from server (JS controls images)
+  applyLikeUI(likeBtnEl, isCardLiked(cardData));
 
   // Like click -> instant UI + API sync + rollback on fail
   likeBtnEl.addEventListener("click", () => {
     const shouldLike = !isCardLiked(cardData);
 
     // instant UI feedback
-    likeBtnEl.classList.toggle("card__like-btn_active", shouldLike);
+    applyLikeUI(likeBtnEl, shouldLike);
 
     api
       .changeLikeCardStatus(cardData._id, shouldLike)
       .then((updatedCard) => {
         cardData.likes = updatedCard.likes;
+        applyLikeUI(likeBtnEl, isCardLiked(cardData));
       })
       .catch(() => {
         // rollback if API fails
-        likeBtnEl.classList.toggle("card__like-btn_active", !shouldLike);
+        applyLikeUI(likeBtnEl, !shouldLike);
       });
   });
 
@@ -193,6 +215,7 @@ function createCardElement(cardData) {
   ) {
     deleteBtnEl.remove();
   } else {
+    applyTrashUI(deleteBtnEl);
     deleteBtnEl.addEventListener("click", () => {
       openDeleteConfirm(cardData._id, cardElement);
     });
