@@ -25,6 +25,7 @@
             aria-label="Change avatar"
           >
             <img class="profile__avatar" src="#" alt="Profile avatar" />
+            <span class="profile__avatar-edit">Edit Avatar</span>
           </button>
         </div>
 
@@ -57,7 +58,6 @@
               aria-label="Delete card"
             ></button>
 
-            <!-- keep non-empty src to avoid broken DOM issues in some builds -->
             <img class="card__image" src="#" alt="" />
 
             <div class="card__content">
@@ -208,12 +208,22 @@
         <h2 class="modal__title modal__title_type_delete">Delete card?</h2>
 
         <form class="modal__form" name="delete-card-form" novalidate>
-          <button
-            type="submit"
-            class="modal__submit-btn modal__submit-btn_type_delete"
-          >
-            Yes
-          </button>
+          <div class="modal__actions">
+            <button
+              type="submit"
+              class="modal__submit-btn modal__submit-btn_type_delete"
+            >
+              Yes
+            </button>
+
+            <button
+              type="button"
+              class="modal__cancel-btn"
+              id="delete-cancel-btn"
+            >
+              Cancel
+            </button>
+          </div>
         </form>
       </div>
     </div>

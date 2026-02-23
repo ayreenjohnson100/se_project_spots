@@ -23,17 +23,10 @@
   background-color: transparent;
   cursor: pointer;
 
-  /* JS sets background-image via imports */
+  /* IMPORTANT: icon is set by JS (webpack-safe) */
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
-
-  opacity: 1;
-  transition: opacity 0.2s ease;
-}
-
-.card__delete-button:hover {
-  opacity: 0.8;
 }
 
 .card__content {
@@ -65,13 +58,13 @@
   background-color: transparent;
   cursor: pointer;
 
-  /* JS sets background-image via imports */
+  /* IMPORTANT: icon is set by JS (webpack-safe) */
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
 
   opacity: 0.4;
-  transition: opacity 0.2s ease;
+  transition: opacity 0.3s ease;
 }
 
 .card__like-btn:hover {

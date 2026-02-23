@@ -52,8 +52,6 @@ class Api {
     }).then(this._checkResponse.bind(this));
   }
 
-  // ✅ correct endpoint for around-api:
-  // /cards/:cardId/likes  (PUT/DELETE)
   changeLikeCardStatus(cardId, shouldLike) {
     return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: shouldLike ? "PUT" : "DELETE",

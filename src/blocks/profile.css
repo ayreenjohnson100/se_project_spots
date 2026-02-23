@@ -5,11 +5,53 @@
   border-bottom: 1px rgba(33, 33, 33, 0.4) solid;
 }
 
+.profile__avatar-container {
+  position: relative;
+}
+
+.profile__avatar-btn {
+  position: relative;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  border-radius: 8px;
+  display: inline-block;
+}
+
 .profile__avatar {
   height: 190px;
   width: 190px;
   border-radius: 8px;
   object-fit: cover;
+  display: block;
+}
+
+/* Overlay label */
+.profile__avatar-edit {
+  position: absolute;
+  inset: 0;
+  border-radius: 8px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-family: "Poppins", Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+
+  color: #fcf5e5;
+  background: rgba(33, 33, 33, 0.7);
+
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+/* Show on hover (desktop) and keyboard focus */
+.profile__avatar-btn:hover .profile__avatar-edit,
+.profile__avatar-btn:focus-visible .profile__avatar-edit {
+  opacity: 1;
 }
 
 .profile__column {
@@ -132,11 +174,12 @@
     width: 100%;
   }
 
-  .profile__add-plus {
-    margin-right: 8px;
-  }
-
   .profile__edit-btn {
     align-self: center;
+  }
+
+  /* On mobile, don’t force overlay on hover */
+  .profile__avatar-edit {
+    display: none;
   }
 }

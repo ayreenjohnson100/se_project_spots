@@ -31,6 +31,10 @@
   box-sizing: border-box;
 }
 
+.modal__container_type_delete {
+  max-width: 670px;
+}
+
 .modal__close-btn {
   position: absolute;
   top: 32px;
@@ -38,7 +42,6 @@
   width: 40px;
   height: 40px;
   opacity: 40%;
-  font-size: 22px;
   border: none;
   background-color: transparent;
   cursor: pointer;
@@ -51,10 +54,14 @@
 
 .modal__title {
   margin: 0 0 32px;
-  font-family: "Poppins";
+  font-family: "Poppins", Arial, sans-serif;
   font-size: 32px;
   line-height: 100%;
   color: #212121;
+}
+
+.modal__title_type_delete {
+  margin-bottom: 24px;
 }
 
 .modal__form {
@@ -62,21 +69,23 @@
   flex-direction: column;
 }
 
+/* ✅ Fix: make labels stack nicely (your screenshot showed default/inline layout) */
 .modal__label {
   margin: 0 0 32px;
-  font-family: "Poppins";
+  font-family: "Poppins", Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .modal__input {
   display: block;
   height: 52px;
-  margin: 8px 0 0;
   border-radius: 8px;
   width: 100%;
   padding: 12px 16px;
   font-size: 16px;
   box-sizing: border-box;
-  margin-bottom: 2px;
   border: 1px solid #21212166;
 }
 
@@ -104,6 +113,29 @@
 .modal__submit-btn_disabled {
   cursor: not-allowed;
   background-color: #212121;
+  opacity: 0.4;
+}
+
+/* ✅ Delete modal buttons row */
+.modal__actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.modal__cancel-btn {
+  max-width: 156px;
+  padding: 18px 32px;
+  border-radius: 8px;
+  border: 1px solid rgba(33, 33, 33, 0.4);
+  background: transparent;
+  font-family: "Poppins", Arial, sans-serif;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.modal__cancel-btn:hover {
+  border-color: rgba(33, 33, 33, 1);
 }
 
 .modal__image-container {
@@ -125,7 +157,7 @@
   color: #ffffff;
   font-size: 20px;
   line-height: 120%;
-  font-family: "Poppins";
+  font-family: "Poppins", Arial, sans-serif;
   padding: 4px 8px;
   margin-top: 8px;
   border-radius: 8px;
@@ -138,6 +170,16 @@
     top: 12px;
     right: 12px;
     max-width: none;
+  }
+
+  .modal__actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .modal__submit-btn,
+  .modal__cancel-btn {
+    max-width: 100%;
   }
 }
 
@@ -152,24 +194,10 @@
   }
 }
 
-.modal__x {
-  border: 2px solid #ffffff;
-  color: #ffffff;
-  right: 10px;
-  transition:
-    background-color 0.3s ease,
-    color 0.3s ease,
-    border-color 0.3s ease;
-}
-
-.modal__close-btn:hover .modal__x {
-  transform: scale(1.1);
-}
-
 .modal__error {
   display: block;
   margin-top: 8px;
   color: #ff0000b2;
-  font-family: "Poppins";
+  font-family: "Poppins", Arial, sans-serif;
   font-size: 16px;
 }
