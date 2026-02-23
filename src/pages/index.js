@@ -17,20 +17,21 @@ import avatarFallbackUrl from "../images/AvatarProject9.png";
 
 import pencilUrl from "../images/pencil.svg";
 import plusUrl from "../images/plus.svg";
+
 import closeUrl from "../images/x-button2.svg";
 import previewCloseUrl from "../images/Hover-X.svg";
 
-// Card icons (webpack-safe)
+import trashDefaultUrl from "../images/Default-Trash-Btn.svg";
+import trashHoverUrl from "../images/State=Hover.svg";
+
 import heartUrl from "../images/heart.svg";
 import heartActiveUrl from "../images/Pink-Heart-Btn.svg";
-import trashUrl from "../images/Default-Trash-Btn.svg";
-import trashHoverUrl from "../images/State=Hover.svg";
 
 // API INSTANCE
 const api = new Api({
   baseUrl: "https://around-api.en.tripleten-services.com/v1",
   headers: {
-    authorization: "dcd11bf2-d570-4463-92c6-86c6fdc192dd", // <-- put your real token here
+    authorization: "dcd11bf2-d570-4463-92c6-86c6fdc192dd",
     "Content-Type": "application/json",
   },
 });
@@ -68,9 +69,6 @@ const previewCloseBtn = previewModal.querySelector(
 );
 const deleteCloseBtn = deleteCardModal.querySelector(".modal__close-btn");
 
-// Delete modal cancel button
-const deleteCancelBtn = deleteCardModal.querySelector("#delete-cancel-btn");
-
 // Close icons
 editProfileModal.querySelector(".modal__close-icon").src = closeUrl;
 newPostModal.querySelector(".modal__close-icon").src = closeUrl;
@@ -83,6 +81,9 @@ const editProfileForm = editProfileModal.querySelector(".modal__form");
 const newPostForm = newPostModal.querySelector(".modal__form");
 const avatarForm = avatarModal.querySelector(".modal__form");
 const deleteForm = deleteCardModal.querySelector(".modal__form");
+
+// Delete cancel button
+const deleteCancelBtn = deleteCardModal.querySelector(".modal__cancel-btn");
 
 // Inputs
 const editProfileNameInput = editProfileModal.querySelector(
@@ -134,19 +135,23 @@ function openImagePreview(link, title) {
   openModal(previewModal);
 }
 
-function getInitialIsLiked(cardData) {
+// Supports BOTH shapes:
+// - API with boolean isLiked
+// - API with likes array (fallback)
+function isCardLiked(cardData) {
   if (typeof cardData.isLiked === "boolean") return cardData.isLiked;
 
   if (!currentUserId) return false;
-  if (!Array.isArray(cardData.likes)) return false;
-
-  return cardData.likes.some((u) => u._id === currentUserId);
+  return (
+    Array.isArray(cardData.likes) &&
+    cardData.likes.some((u) => u._id === currentUserId)
+  );
 }
 
-function applyLikeUI(likeBtnEl, isLiked) {
-  likeBtnEl.classList.toggle("card__like-btn_active", isLiked);
-  likeBtnEl.style.backgroundImage = `url(${isLiked ? heartActiveUrl : heartUrl})`;
-  likeBtnEl.style.opacity = isLiked ? "1" : "0.4";
+function applyLikeUI(likeBtnEl, likeIconEl, liked) {
+  likeBtnEl.classList.toggle("card__like-btn_active", liked);
+  likeIconEl.src = liked ? heartActiveUrl : heartUrl;
+  likeIconEl.alt = liked ? "Liked" : "Like";
 }
 
 function openDeleteConfirm(cardId, cardEl) {
@@ -167,6 +172,7 @@ function createCardElement(cardData) {
   const cardImgEl = cardElement.querySelector(".card__image");
   const cardTitleEl = cardElement.querySelector(".card__title");
   const likeBtnEl = cardElement.querySelector(".card__like-btn");
+  const likeIconEl = cardElement.querySelector(".card__like-icon");
   const deleteBtnEl = cardElement.querySelector(".card__delete-button");
 
   // Fill content
@@ -180,50 +186,47 @@ function createCardElement(cardData) {
   );
 
   // Delete icon (webpack-safe)
-  deleteBtnEl.style.backgroundImage = `url(${trashUrl})`;
+  deleteBtnEl.style.backgroundImage = `url(${trashDefaultUrl})`;
   deleteBtnEl.addEventListener("mouseenter", () => {
     deleteBtnEl.style.backgroundImage = `url(${trashHoverUrl})`;
   });
   deleteBtnEl.addEventListener("mouseleave", () => {
-    deleteBtnEl.style.backgroundImage = `url(${trashUrl})`;
+    deleteBtnEl.style.backgroundImage = `url(${trashDefaultUrl})`;
   });
 
-  // initial like state uses isLiked
-  const initialIsLiked = getInitialIsLiked(cardData);
-  applyLikeUI(likeBtnEl, initialIsLiked);
+  // Initial like state from server
+  applyLikeUI(likeBtnEl, likeIconEl, isCardLiked(cardData));
 
-  // Reviewer request: shouldLike should be derived from the element state
+  // Like click -> shouldLike based on ACTIVE CLASS
   likeBtnEl.addEventListener("click", () => {
-    const isActiveNow = likeBtnEl.classList.contains("card__like-btn_active");
-    const shouldLike = !isActiveNow;
+    const shouldLike = !likeBtnEl.classList.contains("card__like-btn_active");
 
-    // instant UI feedback
-    applyLikeUI(likeBtnEl, shouldLike);
+    // instant UI
+    applyLikeUI(likeBtnEl, likeIconEl, shouldLike);
 
     api
       .changeLikeCardStatus(cardData._id, shouldLike)
       .then((updatedCard) => {
-        // prefer isLiked from server, fallback to likes array
-        const serverIsLiked =
-          typeof updatedCard.isLiked === "boolean"
-            ? updatedCard.isLiked
-            : getInitialIsLiked(updatedCard);
-
-        applyLikeUI(likeBtnEl, serverIsLiked);
+        if (typeof updatedCard.isLiked === "boolean") {
+          cardData.isLiked = updatedCard.isLiked;
+        }
+        if (Array.isArray(updatedCard.likes)) {
+          cardData.likes = updatedCard.likes;
+        }
+        applyLikeUI(likeBtnEl, likeIconEl, isCardLiked(cardData));
       })
       .catch(() => {
-        // rollback if API fails
-        applyLikeUI(likeBtnEl, isActiveNow);
+        applyLikeUI(likeBtnEl, likeIconEl, !shouldLike);
       });
   });
 
-  // Hide delete button if not owner (but NO owner validation inside the click handler)
-  const isOwner =
-    cardData.owner && cardData.owner._id && currentUserId
-      ? cardData.owner._id === currentUserId
-      : true;
-
-  if (!isOwner) {
+  // Remove delete button for non-owners (NO owner check inside listener)
+  if (
+    cardData.owner &&
+    cardData.owner._id &&
+    currentUserId &&
+    cardData.owner._id !== currentUserId
+  ) {
     deleteBtnEl.remove();
   } else {
     deleteBtnEl.addEventListener("click", () => {
@@ -244,7 +247,6 @@ function renderCard(cardData, method = "append") {
 
 // FORM HANDLERS
 
-// Edit Profile
 function handleEditProfileSubmit(evt) {
   evt.preventDefault();
   const submitBtn = editProfileForm.querySelector(".modal__submit-btn");
@@ -266,7 +268,6 @@ function handleEditProfileSubmit(evt) {
     .finally(() => setButtonLoading(submitBtn, false, defaultText));
 }
 
-// New Post
 function handleNewPostSubmit(evt) {
   evt.preventDefault();
   const submitBtn = newPostForm.querySelector(".modal__submit-btn");
@@ -289,7 +290,6 @@ function handleNewPostSubmit(evt) {
     .finally(() => setButtonLoading(submitBtn, false, defaultText));
 }
 
-// Avatar
 function handleAvatarSubmit(evt) {
   evt.preventDefault();
   const submitBtn = avatarForm.querySelector(".modal__submit-btn");
@@ -309,13 +309,12 @@ function handleAvatarSubmit(evt) {
     .finally(() => setButtonLoading(submitBtn, false, defaultText));
 }
 
-// Delete confirm
 function handleDeleteConfirm(evt) {
   evt.preventDefault();
 
   if (!pendingDeleteCardId || !pendingDeleteCardEl) return;
 
-  const btn = deleteForm.querySelector(".modal__submit-btn_type_delete");
+  const btn = deleteForm.querySelector(".modal__submit-btn");
   const defaultText = btn.textContent;
   btn.textContent = "Deleting...";
 
@@ -334,7 +333,6 @@ function handleDeleteConfirm(evt) {
 
 // EVENT LISTENERS
 
-// open modals
 editProfileBtn.addEventListener("click", () => {
   editProfileNameInput.value = profileNameEl.textContent;
   editProfileDescriptionInput.value = profileDescriptionEl.textContent;
@@ -362,12 +360,13 @@ editProfileCloseBtn.addEventListener("click", () =>
 newPostCloseBtn.addEventListener("click", () => closeModal(newPostModal));
 avatarCloseBtn.addEventListener("click", () => closeModal(avatarModal));
 previewCloseBtn.addEventListener("click", () => closeModal(previewModal));
+
 deleteCloseBtn.addEventListener("click", () => {
   closeModal(deleteCardModal);
   resetDeletePending();
 });
 
-// cancel delete modal
+// cancel delete
 deleteCancelBtn.addEventListener("click", () => {
   closeModal(deleteCardModal);
   resetDeletePending();

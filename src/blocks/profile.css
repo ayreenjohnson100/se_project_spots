@@ -10,13 +10,12 @@
 }
 
 .profile__avatar-btn {
-  position: relative;
   padding: 0;
   border: none;
-  background: none;
+  background: transparent;
   cursor: pointer;
+  position: relative;
   border-radius: 8px;
-  display: inline-block;
 }
 
 .profile__avatar {
@@ -27,31 +26,36 @@
   display: block;
 }
 
-/* Overlay label */
+/* hidden by default; shows on desktop hover */
 .profile__avatar-edit {
   position: absolute;
-  inset: 0;
-  border-radius: 8px;
+  left: 0;
+  bottom: 0;
+  width: 100%;
 
+  height: 52px;
   display: flex;
   align-items: center;
   justify-content: center;
 
+  color: #ffffff;
   font-family: "Poppins", Arial, sans-serif;
   font-size: 16px;
   font-weight: 500;
 
-  color: #fcf5e5;
-  background: rgba(33, 33, 33, 0.7);
+  background: rgba(33, 33, 33, 0.6);
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
 
   opacity: 0;
+  pointer-events: none;
   transition: opacity 0.2s ease;
 }
 
-/* Show on hover (desktop) and keyboard focus */
-.profile__avatar-btn:hover .profile__avatar-edit,
-.profile__avatar-btn:focus-visible .profile__avatar-edit {
-  opacity: 1;
+@media (hover: hover) {
+  .profile__avatar-btn:hover .profile__avatar-edit {
+    opacity: 1;
+  }
 }
 
 .profile__column {
@@ -151,6 +155,10 @@
     margin-bottom: 12px;
   }
 
+  .profile__avatar-edit {
+    display: none;
+  }
+
   .profile__name {
     margin-bottom: 6px;
     font-size: 20px;
@@ -176,10 +184,5 @@
 
   .profile__edit-btn {
     align-self: center;
-  }
-
-  /* On mobile, don’t force overlay on hover */
-  .profile__avatar-edit {
-    display: none;
   }
 }

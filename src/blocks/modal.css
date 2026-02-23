@@ -31,10 +31,6 @@
   box-sizing: border-box;
 }
 
-.modal__container_type_delete {
-  max-width: 670px;
-}
-
 .modal__close-btn {
   position: absolute;
   top: 32px;
@@ -54,14 +50,10 @@
 
 .modal__title {
   margin: 0 0 32px;
-  font-family: "Poppins", Arial, sans-serif;
+  font-family: "Poppins";
   font-size: 32px;
   line-height: 100%;
   color: #212121;
-}
-
-.modal__title_type_delete {
-  margin-bottom: 24px;
 }
 
 .modal__form {
@@ -69,23 +61,21 @@
   flex-direction: column;
 }
 
-/* ✅ Fix: make labels stack nicely (your screenshot showed default/inline layout) */
 .modal__label {
   margin: 0 0 32px;
-  font-family: "Poppins", Arial, sans-serif;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+  font-family: "Poppins";
 }
 
 .modal__input {
   display: block;
   height: 52px;
+  margin: 8px 0 0;
   border-radius: 8px;
   width: 100%;
   padding: 12px 16px;
   font-size: 16px;
   box-sizing: border-box;
+  margin-bottom: 2px;
   border: 1px solid #21212166;
 }
 
@@ -113,29 +103,6 @@
 .modal__submit-btn_disabled {
   cursor: not-allowed;
   background-color: #212121;
-  opacity: 0.4;
-}
-
-/* ✅ Delete modal buttons row */
-.modal__actions {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-}
-
-.modal__cancel-btn {
-  max-width: 156px;
-  padding: 18px 32px;
-  border-radius: 8px;
-  border: 1px solid rgba(33, 33, 33, 0.4);
-  background: transparent;
-  font-family: "Poppins", Arial, sans-serif;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-.modal__cancel-btn:hover {
-  border-color: rgba(33, 33, 33, 1);
 }
 
 .modal__image-container {
@@ -157,10 +124,68 @@
   color: #ffffff;
   font-size: 20px;
   line-height: 120%;
-  font-family: "Poppins", Arial, sans-serif;
+  font-family: "Poppins";
   padding: 4px 8px;
   margin-top: 8px;
   border-radius: 8px;
+}
+
+.modal__error {
+  display: block;
+  margin-top: 8px;
+  color: #ff0000b2;
+  font-family: "Poppins";
+  font-size: 16px;
+}
+
+/* ===== Delete confirmation modal ===== */
+
+.modal__container_type_delete {
+  max-width: 630px;
+}
+
+.modal__title_type_delete {
+  margin: 0 0 24px;
+  font-size: 20px;
+  line-height: 120%;
+}
+
+.modal__form_type_delete {
+  margin-top: 0;
+}
+
+.modal__actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.modal__submit-btn_type_delete {
+  max-width: none;
+  background-color: #ff4d4d;
+  color: #ffffff;
+  padding: 12px 24px;
+  height: 40px;
+}
+
+.modal__submit-btn_type_delete:hover {
+  opacity: 0.9;
+}
+
+.modal__cancel-btn {
+  height: 40px;
+  padding: 12px 24px;
+  border-radius: 8px;
+  border: 1px solid #212121;
+  background: transparent;
+  color: #212121;
+  font-family: "Poppins", Arial, sans-serif;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.modal__cancel-btn:hover {
+  opacity: 0.8;
 }
 
 @media screen and (max-width: 627px) {
@@ -170,16 +195,6 @@
     top: 12px;
     right: 12px;
     max-width: none;
-  }
-
-  .modal__actions {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .modal__submit-btn,
-  .modal__cancel-btn {
-    max-width: 100%;
   }
 }
 
@@ -192,12 +207,14 @@
   .modal__submit-btn {
     max-width: 100%;
   }
-}
 
-.modal__error {
-  display: block;
-  margin-top: 8px;
-  color: #ff0000b2;
-  font-family: "Poppins", Arial, sans-serif;
-  font-size: 16px;
+  .modal__actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .modal__submit-btn_type_delete,
+  .modal__cancel-btn {
+    width: 100%;
+  }
 }

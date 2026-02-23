@@ -23,7 +23,6 @@
   background-color: transparent;
   cursor: pointer;
 
-  /* IMPORTANT: icon is set by JS (webpack-safe) */
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
@@ -58,13 +57,13 @@
   background-color: transparent;
   cursor: pointer;
 
-  /* IMPORTANT: icon is set by JS (webpack-safe) */
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
-
   opacity: 0.4;
   transition: opacity 0.3s ease;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
 }
 
 .card__like-btn:hover {
@@ -73,6 +72,12 @@
 
 .card__like-btn_active {
   opacity: 1;
+}
+
+.card__like-icon {
+  width: 23px;
+  height: 20px;
+  display: block;
 }
 
 @media screen and (max-width: 627px) {
