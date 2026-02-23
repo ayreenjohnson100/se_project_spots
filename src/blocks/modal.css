@@ -1,7 +1,9 @@
 .modal {
   visibility: hidden;
   opacity: 0;
-  transition: visibility 0.3s, opacity 0.3s linear;
+  transition:
+    visibility 0.3s,
+    opacity 0.3s linear;
   background-color: #00000080;
   position: fixed;
   top: 0;
@@ -36,7 +38,6 @@
   width: 40px;
   height: 40px;
   opacity: 40%;
-  font-size: 22px;
   border: none;
   background-color: transparent;
   cursor: pointer;
@@ -102,7 +103,6 @@
 .modal__submit-btn_disabled {
   cursor: not-allowed;
   background-color: #212121;
-  opacity: 0.5;
 }
 
 .modal__image-container {
@@ -130,6 +130,64 @@
   border-radius: 8px;
 }
 
+.modal__error {
+  display: block;
+  margin-top: 8px;
+  color: #ff0000b2;
+  font-family: "Poppins";
+  font-size: 16px;
+}
+
+/* ===== Delete confirmation modal ===== */
+
+.modal__container_type_delete {
+  max-width: 630px;
+}
+
+.modal__title_type_delete {
+  margin: 0 0 24px;
+  font-size: 20px;
+  line-height: 120%;
+}
+
+.modal__form_type_delete {
+  margin-top: 0;
+}
+
+.modal__actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.modal__submit-btn_type_delete {
+  max-width: none;
+  background-color: #ff4d4d;
+  color: #ffffff;
+  padding: 12px 24px;
+  height: 40px;
+}
+
+.modal__submit-btn_type_delete:hover {
+  opacity: 0.9;
+}
+
+.modal__cancel-btn {
+  height: 40px;
+  padding: 12px 24px;
+  border-radius: 8px;
+  border: 1px solid #212121;
+  background: transparent;
+  color: #212121;
+  font-family: "Poppins", Arial, sans-serif;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.modal__cancel-btn:hover {
+  opacity: 0.8;
+}
+
 @media screen and (max-width: 627px) {
   .modal__close-btn_type_preview {
     padding: 22px 12px 12px;
@@ -149,24 +207,14 @@
   .modal__submit-btn {
     max-width: 100%;
   }
-}
 
-.modal__x {
-  border: 2px solid #ffffff;
-  color: #ffffff;
-  right: 10px;
-  transition: background-color 0.3s ease, color 0.3s ease,
-    border-color 0.3s ease;
-}
+  .modal__actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
 
-.modal__close-btn:hover .modal__x {
-  transform: scale(1.1);
-}
-
-.modal__error {
-  display: block;
-  margin-top: 8px;
-  color: #ff0000b2;
-  font-family: "Poppins";
-  font-size: 16px;
+  .modal__submit-btn_type_delete,
+  .modal__cancel-btn {
+    width: 100%;
+  }
 }

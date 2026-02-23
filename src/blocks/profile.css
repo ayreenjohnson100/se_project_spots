@@ -5,11 +5,57 @@
   border-bottom: 1px rgba(33, 33, 33, 0.4) solid;
 }
 
+.profile__avatar-container {
+  position: relative;
+}
+
+.profile__avatar-btn {
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  position: relative;
+  border-radius: 8px;
+}
+
 .profile__avatar {
   height: 190px;
   width: 190px;
   border-radius: 8px;
   object-fit: cover;
+  display: block;
+}
+
+/* hidden by default; shows on desktop hover */
+.profile__avatar-edit {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #ffffff;
+  font-family: "Poppins", Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+
+  background: rgba(33, 33, 33, 0.6);
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+@media (hover: hover) {
+  .profile__avatar-btn:hover .profile__avatar-edit {
+    opacity: 1;
+  }
 }
 
 .profile__column {
@@ -109,6 +155,10 @@
     margin-bottom: 12px;
   }
 
+  .profile__avatar-edit {
+    display: none;
+  }
+
   .profile__name {
     margin-bottom: 6px;
     font-size: 20px;
@@ -130,10 +180,6 @@
 
   .profile__add-btn {
     width: 100%;
-  }
-
-  .profile__add-plus {
-    margin-right: 8px;
   }
 
   .profile__edit-btn {
